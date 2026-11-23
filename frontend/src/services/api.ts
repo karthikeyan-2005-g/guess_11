@@ -1,4 +1,36 @@
-const API_BASE = '/api';
+// Game Server Base URL resolution for Web & Native Capacitor APK
+export function getServerBaseUrl(): string {
+  const custom = localStorage.getItem('gte_server_url');
+  if (custom) {
+    return custom.replace(/\/$/, '');
+  }
+
+  // Detect if running inside Capacitor Native APK (origin is localhost without Vite port or capacitor://)
+  const isCapacitorNative =
+    typeof window !== 'undefined' &&
+    (window.location.protocol === 'capacitor:' ||
+      window.location.protocol === 'file:' ||
+      (window.location.hostname === 'localhost' && window.location.port !== '5173'));
+
+  if (isCapacitorNative) {
+    return 'http://10.161.180.82:3001';
+  }
+
+  return '';
+}
+
+export function setServerBaseUrl(url: string) {
+  if (url) {
+    localStorage.setItem('gte_server_url', url.replace(/\/$/, ''));
+  } else {
+    localStorage.removeItem('gte_server_url');
+  }
+}
+
+export function getApiBase(): string {
+  const base = getServerBaseUrl();
+  return base ? `${base}/api` : '/api';
+}
 
 export class ApiError extends Error {
   statusCode: number;
@@ -17,6 +49,7 @@ export async function apiRequest<T = any>(
   options: RequestInit = {}
 ): Promise<T> {
   const token = localStorage.getItem('gte_access_token');
+  const apiBase = getApiBase();
 
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
@@ -27,20 +60,36 @@ export async function apiRequest<T = any>(
     headers['Authorization'] = `Bearer ${token}`;
   }
 
-  const response = await fetch(`${API_BASE}${endpoint}`, {
-    ...options,
-    headers,
-  });
+  let response: Response;
+  try {
+    response = await fetch(`${apiBase}${endpoint}`, {
+      ...options,
+      headers,
+    });
+  } catch (err: any) {
+    throw new ApiError(
+      `Cannot connect to game server at ${apiBase || 'localhost'}. Make sure the server is running and your phone is on the same Wi-Fi.`,
+      0
+    );
+  }
+
+  const contentType = response.headers.get('content-type') || '';
+  if (!contentType.includes('application/json')) {
+    throw new ApiError(
+      `Game server returned non-JSON response from ${apiBase}${endpoint}. Check server address in settings.`,
+      response.status || 500
+    );
+  }
 
   const data = await response.json().catch(() => ({}));
 
-  if (!response.ok) {
+  if (!response.ok || (data && data.success === false)) {
     // If token expired, attempt refresh
     if (response.status === 401 && !endpoint.includes('/auth/')) {
       const refreshToken = localStorage.getItem('gte_refresh_token');
       if (refreshToken) {
         try {
-          const refreshRes = await fetch(`${API_BASE}/auth/refresh`, {
+          const refreshRes = await fetch(`${apiBase}/auth/refresh`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ refreshToken }),
@@ -48,20 +97,21 @@ export async function apiRequest<T = any>(
 
           if (refreshRes.ok) {
             const refreshData = await refreshRes.json();
-            localStorage.setItem('gte_access_token', refreshData.data.tokens.accessToken);
-            localStorage.setItem('gte_refresh_token', refreshData.data.tokens.refreshToken);
+            if (refreshData?.data?.tokens?.accessToken) {
+              localStorage.setItem('gte_access_token', refreshData.data.tokens.accessToken);
+              localStorage.setItem('gte_refresh_token', refreshData.data.tokens.refreshToken);
 
-            // Retry original request
-            headers['Authorization'] = `Bearer ${refreshData.data.tokens.accessToken}`;
-            const retryRes = await fetch(`${API_BASE}${endpoint}`, {
-              ...options,
-              headers,
-            });
-            const retryData = await retryRes.json();
-            if (retryRes.ok) return retryData;
+              // Retry original request
+              headers['Authorization'] = `Bearer ${refreshData.data.tokens.accessToken}`;
+              const retryRes = await fetch(`${apiBase}${endpoint}`, {
+                ...options,
+                headers,
+              });
+              const retryData = await retryRes.json();
+              if (retryRes.ok) return retryData;
+            }
           }
         } catch (e) {
-          // Clear session on refresh failure
           localStorage.removeItem('gte_access_token');
           localStorage.removeItem('gte_refresh_token');
           localStorage.removeItem('gte_user');
@@ -70,10 +120,14 @@ export async function apiRequest<T = any>(
     }
 
     throw new ApiError(
-      data.message || 'Something went wrong',
-      response.status,
+      data.message || 'Invalid server response. Please verify credentials or server connection.',
+      response.status || 400,
       data.errors
     );
+  }
+
+  if (data && typeof data === 'object' && !('data' in data) && !('success' in data)) {
+    throw new ApiError('Unexpected server response format.', 500);
   }
 
   return data;

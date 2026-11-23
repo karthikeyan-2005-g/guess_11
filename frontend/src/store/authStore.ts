@@ -45,6 +45,9 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
     set({ isLoading: true });
     try {
       const res = await authService.login(credentials);
+      if (!res?.data?.user || !res?.data?.tokens) {
+        throw new Error(res?.message || 'Server returned an invalid response. Please verify connection.');
+      }
       const { user, tokens } = res.data;
 
       localStorage.setItem('gte_access_token', tokens.accessToken);
@@ -68,6 +71,9 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
     set({ isLoading: true });
     try {
       const res = await authService.register(data);
+      if (!res?.data?.user || !res?.data?.tokens) {
+        throw new Error(res?.message || 'Registration failed. Server returned an invalid response.');
+      }
       const { user, tokens } = res.data;
 
       localStorage.setItem('gte_access_token', tokens.accessToken);

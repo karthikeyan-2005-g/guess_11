@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuthStore } from '../store/authStore';
-import { Eye, EyeOff, Lock, User as UserIcon, AlertCircle, Sparkles } from 'lucide-react';
+import { getServerBaseUrl, setServerBaseUrl } from '../services/api';
+import { Eye, EyeOff, Lock, User as UserIcon, AlertCircle, Sparkles, Server } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import audioService from '../services/audioService';
 
@@ -14,9 +15,20 @@ export const LoginPage: React.FC = () => {
   const [rememberMe, setRememberMe] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
 
+  const [serverUrl, setServerUrlState] = useState<string>(getServerBaseUrl());
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+
+  const handleEditServer = () => {
+    const current = getServerBaseUrl() || 'http://10.161.180.82:3001';
+    const newUrl = window.prompt('Enter Game Server URL (Wi-Fi or Tunnel):\nExample: http://10.161.180.82:3001', current);
+    if (newUrl !== null) {
+      setServerBaseUrl(newUrl.trim());
+      setServerUrlState(newUrl.trim());
+      setError(null);
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -193,6 +205,21 @@ export const LoginPage: React.FC = () => {
           >
             Create Account
           </Link>
+        </div>
+
+        {/* Server Connection Badge */}
+        <div className="mt-5 pt-3 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
+          <div className="flex items-center gap-1.5 truncate mr-2">
+            <Server className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
+            <span className="truncate">Server: <strong className="text-cyan-300 font-mono">{serverUrl || 'http://10.161.180.82:3001'}</strong></span>
+          </div>
+          <button
+            type="button"
+            onClick={handleEditServer}
+            className="text-orange-400 hover:text-orange-300 font-bold shrink-0 underline"
+          >
+            Change
+          </button>
         </div>
       </motion.div>
     </div>

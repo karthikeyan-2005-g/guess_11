@@ -1,4 +1,5 @@
 import { io, Socket } from 'socket.io-client';
+import { getServerBaseUrl } from './api';
 
 class SocketService {
   private socket: Socket | null = null;
@@ -9,8 +10,9 @@ class SocketService {
     }
 
     const token = localStorage.getItem('gte_access_token');
+    const serverUrl = getServerBaseUrl();
 
-    this.socket = io({
+    this.socket = io(serverUrl || undefined, {
       auth: { token },
       transports: ['websocket', 'polling'],
       autoConnect: true,
