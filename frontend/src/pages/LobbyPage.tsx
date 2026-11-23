@@ -66,13 +66,16 @@ export const LobbyPage: React.FC = () => {
     ? `http://${localIp}${port || ':5173'}/room/${roomCode}`
     : `${window.location.origin}/room/${roomCode}`;
 
-  // Internet share URL (if tunnel or custom domain provided)
+  // 24/7 Cloud share URL (hosted on Render)
+  const cloudShareUrl = `https://guess-the-eleven-umyl.onrender.com/room/${roomCode}`;
+
+  // Internet share URL
   const internetShareUrl = customTunnelUrl
     ? `${customTunnelUrl.replace(/\/$/, '')}/room/${roomCode}`
-    : wifiShareUrl;
+    : cloudShareUrl;
 
   // Selected share URL for sharing buttons
-  const activeShareUrl = shareTab === 'internet' ? internetShareUrl : wifiShareUrl;
+  const activeShareUrl = shareTab === 'internet' ? cloudShareUrl : wifiShareUrl;
 
   const playerCount = Object.keys(players).length;
   const isFull = playerCount >= 11;
@@ -323,7 +326,7 @@ export const LobbyPage: React.FC = () => {
               }`}
             >
               <Globe className="w-4 h-4" />
-              <span>Over Internet (Tunnel)</span>
+              <span>24/7 Cloud Link</span>
             </button>
           </div>
 
@@ -366,41 +369,42 @@ export const LobbyPage: React.FC = () => {
             </div>
           )}
 
-          {/* Tab 2: Over Internet / Different Wi-Fi */}
+          {/* Tab 2: Over Internet / Render 24/7 Cloud */}
           {shareTab === 'internet' && (
             <div className="space-y-3">
               <p className="text-xs text-slate-300">
-                If your friends are at their own houses or on mobile 4G/5G data, run this command in a new terminal to create a free public link:
+                Share this <strong>24/7 Cloud Link</strong> with your friends on mobile data (4G/5G) or any Wi-Fi:
               </p>
-              <div className="p-3 bg-slate-950 rounded-xl border border-slate-800 font-mono text-xs text-amber-400 select-all">
-                npm run tunnel
+              <div className="p-3 bg-slate-900 rounded-2xl border border-purple-500/40 font-mono text-xs text-purple-300 break-all select-all">
+                {cloudShareUrl}
               </div>
-              <p className="text-xs text-slate-400">
-                Then paste the generated <code>https://...</code> public URL here:
-              </p>
-              <input
-                type="text"
-                value={customTunnelUrl}
-                onChange={(e) => setCustomTunnelUrl(e.target.value)}
-                placeholder="https://your-tunnel-url.loca.lt"
-                className="w-full bg-slate-900 text-white px-3.5 py-2.5 rounded-xl border border-slate-700 text-xs font-mono focus:border-cyan-400 focus:outline-none"
-              />
 
-              {customTunnelUrl && (
-                <div className="space-y-2">
-                  <div className="p-2.5 bg-slate-900 rounded-xl border border-purple-500/40 text-purple-300 text-xs font-mono break-all">
-                    {internetShareUrl}
-                  </div>
-                  <button
-                    type="button"
-                    onClick={() => handleCopyLink(internetShareUrl)}
-                    className="w-full py-2.5 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-bold text-xs shadow-neon-purple flex items-center justify-center gap-2"
-                  >
-                    <Copy className="w-4 h-4" />
-                    COPY INTERNET INVITATION LINK
-                  </button>
-                </div>
-              )}
+              <div className="flex gap-2">
+                <button
+                  type="button"
+                  onClick={() => handleCopyLink(cloudShareUrl)}
+                  className="flex-1 py-3 rounded-xl bg-purple-600 hover:bg-purple-500 text-white font-black text-xs flex items-center justify-center gap-2 shadow-neon-purple transition-all"
+                >
+                  <Copy className="w-4 h-4" />
+                  {copied ? 'LINK COPIED!' : 'COPY 24/7 CLOUD LINK'}
+                </button>
+
+                <button
+                  type="button"
+                  onClick={() => shareService.shareWhatsApp({ roomCode, roomUrl: cloudShareUrl })}
+                  className="p-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white transition-all"
+                  title="Share to WhatsApp"
+                >
+                  <MessageCircle className="w-5 h-5" />
+                </button>
+              </div>
+
+              <div className="p-3 rounded-xl bg-purple-950/40 border border-purple-500/30 text-[11px] text-purple-300 flex items-start gap-2">
+                <Sparkles className="w-4 h-4 shrink-0 text-purple-400 mt-0.5" />
+                <span>
+                  Friends can open this link directly in mobile Chrome/Safari without installing the app!
+                </span>
+              </div>
             </div>
           )}
         </div>
