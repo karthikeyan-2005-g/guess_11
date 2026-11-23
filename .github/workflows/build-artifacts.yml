@@ -1,4 +1,4 @@
-name: Build Android APK and Upload Artifacts
+name: Build Android APK and iOS IPA Packages
 
 on:
   push:
@@ -9,8 +9,8 @@ permissions:
   contents: write
 
 jobs:
-  build-and-release-apk:
-    name: Build Android APK & GitHub Release
+  build-android:
+    name: Build Android APK
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
@@ -53,53 +53,147 @@ jobs:
 
       - name: Prepare APK for Release
         run: |
-          cp frontend/android/app/build/outputs/apk/debug/app-debug.apk ./Guess11.apk
-          cp frontend/android/app/build/outputs/apk/debug/app-debug.apk ./GUESS.apk
-          cp frontend/android/app/build/outputs/apk/debug/app-debug.apk ./GuessTheEleven.apk
+          mkdir -p ./artifacts/android
+          cp frontend/android/app/build/outputs/apk/debug/app-debug.apk ./artifacts/android/Guess11.apk
+          cp frontend/android/app/build/outputs/apk/debug/app-debug.apk ./artifacts/android/GuessTheEleven.apk
 
-      - name: Upload APK to GitHub Artifacts
+      - name: Upload Android APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: Guess11-Android-APK
-          path: |
-            ./Guess11.apk
-            ./GUESS.apk
-            ./GuessTheEleven.apk
+          path: ./artifacts/android/*
           retention-days: 30
 
-      - name: Publish APK to GitHub Releases
-        uses: softprops/action-gh-release@v2
+  build-ios:
+    name: Build iOS IPA Package
+    runs-on: macos-14
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
         with:
-          tag_name: v1.0.6
-          name: "GUESS 11 - Android APK (v1.0.6 - Custom App Icon & Splash)"
-          body: |
-            ## 🎨 GUESS 11 (v1.0.6) ⚡
-            > **"DRAW IT. GUESS IT. SCORE 11."**
+          node-version: 20
+          cache: 'npm'
 
-            ### 🚀 What's New in v1.0.6:
-            - 🎨 **Custom App Icon**: Beautiful neon 3D "GUESS 11" artwork on your mobile home screen (replaces default Capacitor logo)!
-            - ✨ **Adaptive Icons & Dark Splash**: Full Android Adaptive Icon support with `#090D16` dark background and custom splash screens.
-            - 📱 **Official App Name**: Name displayed under the icon is **"Guess 11"**.
-            - 🔄 **Real-Time Multiplayer Sync**: Fixed player lobby synchronization and host START GAME controls.
-            - ☁️ **24/7 Cloud Ready**: Permanent online multiplayer server on Render.
+      - name: Install Dependencies
+        run: npm install
 
-            ### 📲 How to Install:
-            1. **Important**: Uninstall any previously installed version of Guess 11 from your phone first (this clears Android's cached app icon).
-            2. Under **Assets** below, tap **`Guess11.apk`** to download.
-            3. Install the APK on your phone.
-            4. Enjoy **Guess 11** with custom artwork!
-          files: |
-            ./Guess11.apk
-            ./GUESS.apk
-            ./GuessTheEleven.apk
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Generate Database Client
+        run: npm run db:generate
 
-      - name: Upload Logs on Failure
-        if: failure()
+      - name: Build Web Application Bundle
+        run: npm run build --workspace=frontend
+
+      - name: Sync iOS Capacitor Assets
+        working-directory: frontend
+        run: npx cap sync ios
+
+      - name: Install CocoaPods
+        working-directory: frontend/ios/App
+        run: pod install
+
+      - name: Build iOS Application (Code Signing Disabled for Sideloading)
+        working-directory: frontend/ios/App
+        run: |
+          xcodebuild clean build \
+            -workspace App.xcworkspace \
+            -scheme App \
+            -configuration Release \
+            -sdk iphoneos \
+            -derivedDataPath derived_data \
+            CODE_SIGNING_ALLOWED=NO \
+            CODE_SIGNING_REQUIRED=NO \
+            CODE_SIGN_IDENTITY=""
+
+      - name: Package Payload into IPA
+        run: |
+          mkdir -p ./Payload ./artifacts/ios
+          cp -r frontend/ios/App/derived_data/Build/Products/Release-iphoneos/App.app ./Payload/
+          zip -r -y ./artifacts/ios/Guess11.ipa ./Payload
+          cp ./artifacts/ios/Guess11.ipa ./artifacts/ios/GuessTheEleven.ipa
+          ls -lh ./artifacts/ios
+
+      - name: Upload iOS IPA Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: build-failure-logs
-          path: |
-            frontend/android/**/build/reports/
-            ~/.gradle/daemon/**/*.log
+          name: Guess11-iOS-IPA
+          path: ./artifacts/ios/*
+          retention-days: 30
+
+  release-all:
+    name: Publish Android APK & iOS IPA to GitHub Releases
+    needs: [build-android, build-ios]
+    if: always() && needs.build-android.result == 'success'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Create Release Staging Directory
+        run: mkdir -p ./release-dist
+
+      - name: Download Android Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: Guess11-Android-APK
+          path: ./release-dist
+
+      - name: Download iOS Artifact
+        continue-on-error: true
+        uses: actions/download-artifact@v4
+        with:
+          name: Guess11-iOS-IPA
+          path: ./release-dist
+
+      - name: List Artifacts to be Released
+        run: ls -la ./release-dist
+
+      - name: Publish to GitHub Releases
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v1.0.7
+          name: "GUESS 11 (v1.0.7) - Android APK & iPhone iOS IPA"
+          body: |
+            ## 🎨 GUESS 11 (v1.0.7) ⚡
+            > **"DRAW IT. GUESS IT. SCORE 11."**
+
+            ### 🚀 What's New in v1.0.7:
+            - 🍎 **iPhone / iOS IPA Package**: Full native iOS application packaged as `Guess11.ipa`!
+            - 🤖 **Android APK**: `Guess11.apk` with custom neon launcher icon & dark splash screen.
+            - 📱 **Official App Name**: Name displayed on home screen is **"Guess 11"**.
+            - 🔄 **Real-Time Multiplayer Sync**: Seamless cross-platform play between Android, iOS, and PC.
+            - ☁️ **24/7 Cloud Ready**: Permanent online multiplayer server on Render.
+
+            ---
+
+            ### 📲 How to Install on iPhone (iOS):
+            #### Method A: Direct Sideloading (.ipa)
+            1. Download **`Guess11.ipa`** from the Assets below.
+            2. **Using PC (Sideloadly / 3uTools)**:
+               - Connect iPhone to PC with USB.
+               - Open Sideloadly or 3uTools, drag and drop `Guess11.ipa`, enter your Apple ID, and install.
+               - On iPhone, go to **Settings > General > VPN & Device Management** and tap **Trust**.
+            3. **Using On-Device Tools (Scarlet / SideStore / TrollStore)**:
+               - Import `Guess11.ipa` directly into Scarlet or TrollStore to install without PC!
+
+            #### Method B: Instant Web App (No PC, 1-Tap Safari Install):
+            1. Open Safari on iPhone and visit: **https://guess-the-eleven-umyl.onrender.com**
+            2. Tap the **Share icon** `[ ⎋ ]` at the bottom.
+            3. Tap **"Add to Home Screen"**.
+            4. Enjoy fullscreen native gameplay with custom Guess 11 icon immediately!
+
+            ---
+
+            ### 🤖 How to Install on Android:
+            1. Under **Assets** below, tap **`Guess11.apk`** to download.
+            2. (If upgrading, uninstall previous version first to refresh launcher icon).
+            3. Install and enjoy!
+          files: |
+            ./release-dist/Guess11.apk
+            ./release-dist/GuessTheEleven.apk
+            ./release-dist/Guess11.ipa
+            ./release-dist/GuessTheEleven.ipa
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

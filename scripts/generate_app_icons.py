@@ -279,7 +279,26 @@ def main():
         splash_img.paste(scaled_logo, (pos_x, pos_y), scaled_logo)
         splash_img.save(os.path.join(splash_dir, 'splash.png'), 'PNG')
 
-    print("✅ All Android splash screens updated with Guess 11 branding!")
+    # 4. Generate iOS Universal AppIcon (1024x1024)
+    ios_icon_dir = 'frontend/ios/App/App/Assets.xcassets/AppIcon.appiconset'
+    if os.path.exists(ios_icon_dir):
+        # iOS AppIcon must be opaque with no alpha (or solid dark background)
+        ios_icon = Image.new('RGB', (1024, 1024), (9, 13, 22))
+        ios_icon.paste(full_icon, (0, 0), full_icon)
+        ios_icon.save(os.path.join(ios_icon_dir, 'AppIcon-512@2x.png'), 'PNG')
+        print("✅ iOS AppIcon-512@2x.png updated with Guess 11 branding!")
+
+    # 5. Generate iOS Universal Splash Screens (2732x2732)
+    ios_splash_dir = 'frontend/ios/App/App/Assets.xcassets/Splash.imageset'
+    if os.path.exists(ios_splash_dir):
+        ios_splash = Image.new('RGBA', (2732, 2732), (9, 13, 22, 255))
+        # Logo centered at 800x800
+        logo_splash = full_icon.resize((800, 800), Image.Resampling.LANCZOS)
+        offset = (2732 - 800) // 2
+        ios_splash.paste(logo_splash, (offset, offset), logo_splash)
+        for s_name in ['splash-2732x2732.png', 'splash-2732x2732-1.png', 'splash-2732x2732-2.png']:
+            ios_splash.save(os.path.join(ios_splash_dir, s_name), 'PNG')
+        print("✅ iOS Splash screens updated with Guess 11 branding!")
 
 if __name__ == '__main__':
     main()
