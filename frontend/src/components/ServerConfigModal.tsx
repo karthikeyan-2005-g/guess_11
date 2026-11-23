@@ -15,13 +15,13 @@ export const ServerConfigModal: React.FC<ServerConfigModalProps> = ({
   onClose,
   onSaved,
 }) => {
-  const currentUrl = getServerBaseUrl() || 'http://10.161.180.82:3001';
+  const currentUrl = getServerBaseUrl() || 'https://guess-the-eleven-umyl.onrender.com';
   const [urlInput, setUrlInput] = useState(currentUrl);
   const [testStatus, setTestStatus] = useState<'idle' | 'testing' | 'success' | 'error'>('idle');
   const [testMessage, setTestMessage] = useState<string>('');
 
-  const defaultRenderUrl = 'https://guess-the-eleven.onrender.com';
-  const defaultLocalIp = 'http://10.161.180.82:3001';
+  const defaultRenderUrl = 'https://guess-the-eleven-umyl.onrender.com';
+  const defaultLocalIp = 'http://10.92.131.82:3001';
   const defaultLocalhost = 'http://localhost:3001';
 
   const handleTestConnection = async () => {
@@ -98,7 +98,7 @@ export const ServerConfigModal: React.FC<ServerConfigModalProps> = ({
                 setUrlInput(e.target.value);
                 setTestStatus('idle');
               }}
-              placeholder="https://your-service.onrender.com"
+              placeholder="https://guess-the-eleven-umyl.onrender.com"
               className="w-full pl-9 pr-3 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white font-mono text-xs focus:ring-2 focus:ring-cyan-400 focus:outline-none"
             />
           </div>
@@ -116,7 +116,7 @@ export const ServerConfigModal: React.FC<ServerConfigModalProps> = ({
               className="px-3 py-1.5 rounded-lg bg-purple-950/70 hover:bg-purple-900 text-xs text-purple-300 font-semibold border border-purple-500/40 flex items-center gap-1.5 transition-all shadow-sm"
             >
               <Cloud className="w-3.5 h-3.5 text-purple-400" />
-              ☁️ Render Cloud 24/7
+              ☁️ Render Cloud 24/7 (Live)
             </button>
             <button
               type="button"
@@ -124,7 +124,7 @@ export const ServerConfigModal: React.FC<ServerConfigModalProps> = ({
               className="px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-xs text-cyan-300 font-mono border border-cyan-500/30 flex items-center gap-1.5 transition-all"
             >
               <Wifi className="w-3 h-3 text-cyan-400" />
-              10.161.180.82 (Wi-Fi)
+              10.92.131.82 (Wi-Fi)
             </button>
             <button
               type="button"

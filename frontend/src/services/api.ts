@@ -18,7 +18,7 @@ export function getServerBaseUrl(): string {
       (window.location.hostname === 'localhost' && window.location.port !== '5173'));
 
   if (isCapacitorNative) {
-    return 'http://10.161.180.82:3001';
+    return 'https://guess-the-eleven-umyl.onrender.com';
   }
 
   return '';

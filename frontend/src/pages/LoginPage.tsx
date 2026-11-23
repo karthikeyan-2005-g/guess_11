@@ -212,7 +212,7 @@ export const LoginPage: React.FC = () => {
         <div className="mt-5 pt-3 border-t border-slate-800/80 flex items-center justify-between text-[11px] text-slate-400">
           <div className="flex items-center gap-1.5 truncate mr-2">
             <Server className="w-3.5 h-3.5 text-cyan-400 shrink-0" />
-            <span className="truncate">Server: <strong className="text-cyan-300 font-mono">{serverUrl || 'http://10.161.180.82:3001'}</strong></span>
+            <span className="truncate">Server: <strong className="text-cyan-300 font-mono">{serverUrl || 'https://guess-the-eleven-umyl.onrender.com'}</strong></span>
           </div>
           <button
             type="button"

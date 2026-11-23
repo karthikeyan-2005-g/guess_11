@@ -68,22 +68,22 @@ jobs:
       - name: Publish APK to GitHub Releases
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v1.0.2
-          name: "GUESS - Android APK (v1.0.2 - 24/7 Cloud & Render Support)"
+          tag_name: v1.0.3
+          name: "GUESS - Android APK (v1.0.3 - 24/7 Live Cloud Connected)"
           body: |
-            ## 🎨 GUESS (v1.0.2) ⚡
+            ## 🎨 GUESS (v1.0.3) ⚡
             > **"DRAW IT. GUESS IT. SCORE 11."**
 
-            ### 🚀 What's New in v1.0.2:
-            - ☁️ **24/7 Render Cloud Support**: Connect to permanent Render cloud server without needing your PC or local Wi-Fi running.
-            - ⚡ **Interactive Server Manager**: In-app server tester with 1-click presets for Render Cloud 24/7, Local Wi-Fi, and Localhost.
-            - 🔒 **Fixed Cleartext Traffic**: Full network security permissions for Android 9, 10, 11, 12, 13, 14, 15.
+            ### 🚀 What's New in v1.0.3:
+            - ☁️ **Permanent 24/7 Live Cloud Server**: Pre-configured to automatically connect to **https://guess-the-eleven-umyl.onrender.com**!
+            - 📱 **Zero Setup Required**: Install the APK and play from anywhere on mobile data (4G/5G) or Wi-Fi — no PC needed!
+            - 🌐 **Web Game Live**: Play in browser at **https://guess-the-eleven-umyl.onrender.com**!
 
-            ### 📲 How to Install & Connect:
-            1. Under **Assets** below, tap **`GUESS.apk`** to download.
-            2. Install the APK on your phone.
-            3. Open GUESS on your phone.
-            4. On the Login screen, tap **[Change]** next to Server to select **Render Cloud 24/7** or your local PC IP!
+            ### 📲 How to Install & Play:
+            1. Under **Assets** below, tap **`GUESS.apk`** to download directly to your mobile phone.
+            2. Open the downloaded file and tap **Install**.
+            3. Open GUESS on your phone — it connects automatically to the 24/7 cloud server!
+            4. Register or Login and enjoy!
           files: |
             ./GUESS.apk
             ./GuessTheEleven.apk
