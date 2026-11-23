@@ -38,12 +38,12 @@ export const SplashPage: React.FC = () => {
           <img src="/images/logo.png" alt="Guess The Eleven" className="w-full h-full object-cover rounded-[22px]" />
         </div>
 
-        <h1 className="font-display font-black text-4xl sm:text-5xl text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-purple-300 to-cyan-400 tracking-tight mb-2">
-          GUESS THE ELEVEN
+        <h1 className="font-display font-black text-5xl sm:text-6xl text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-pink-400 to-amber-400 tracking-wider mb-2">
+          GUESS
         </h1>
 
         <p className="text-sm sm:text-base font-extrabold text-cyan-300 tracking-widest uppercase">
-          DRAW IT. GUESS IT. SCORE 11.
+          THE ELEVEN • SCORE 11
         </p>
 
         <div className="mt-8 flex items-center gap-2">

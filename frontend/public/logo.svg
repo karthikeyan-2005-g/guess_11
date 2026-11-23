@@ -1,53 +1,40 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" fill="none" width="100%" height="100%">
   <defs>
     <!-- Background Gradient -->
-    <radialGradient id="bgGlow" cx="50%" cy="45%" r="65%">
-      <stop offset="0%" stop-color="#1e1b4b" stop-opacity="0.8"/>
+    <radialGradient id="guessBg" cx="50%" cy="40%" r="65%">
+      <stop offset="0%" stop-color="#1e1b4b" stop-opacity="0.9"/>
       <stop offset="60%" stop-color="#090d16" stop-opacity="1"/>
-      <stop offset="100%" stop-color="#04060a" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#030508" stop-opacity="1"/>
     </radialGradient>
 
     <!-- Border Gradient -->
-    <linearGradient id="borderGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#f97316"/>
-      <stop offset="35%" stop-color="#ec4899"/>
-      <stop offset="70%" stop-color="#8b5cf6"/>
-      <stop offset="100%" stop-color="#06b6d4"/>
+    <linearGradient id="guessBorder" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06b6d4"/>
+      <stop offset="35%" stop-color="#a855f7"/>
+      <stop offset="70%" stop-color="#ec4899"/>
+      <stop offset="100%" stop-color="#f59e0b"/>
     </linearGradient>
 
-    <!-- Number 1 Left (Cyan - Purple) -->
-    <linearGradient id="numOneLeft" x1="0%" y1="0%" x2="100%" y2="100%">
+    <!-- Text Gradient -->
+    <linearGradient id="textGrad" x1="0%" y1="0%" x2="100%" y2="0%">
       <stop offset="0%" stop-color="#38bdf8"/>
-      <stop offset="50%" stop-color="#0284c7"/>
-      <stop offset="100%" stop-color="#6366f1"/>
+      <stop offset="25%" stop-color="#818cf8"/>
+      <stop offset="50%" stop-color="#e879f9"/>
+      <stop offset="75%" stop-color="#f43f5e"/>
+      <stop offset="100%" stop-color="#fbbf24"/>
     </linearGradient>
 
-    <!-- Number 1 Right (Pink - Orange - Amber) -->
-    <linearGradient id="numOneRight" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#f43f5e"/>
+    <!-- Paint Stroke Gradient -->
+    <linearGradient id="strokeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#06b6d4"/>
       <stop offset="40%" stop-color="#d946ef"/>
       <stop offset="80%" stop-color="#f59e0b"/>
       <stop offset="100%" stop-color="#fbbf24"/>
     </linearGradient>
 
-    <!-- Paint Trail Gradient -->
-    <linearGradient id="brushTrail" x1="0%" y1="100%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.1"/>
-      <stop offset="30%" stop-color="#8b5cf6" stop-opacity="0.8"/>
-      <stop offset="70%" stop-color="#ec4899" stop-opacity="0.95"/>
-      <stop offset="100%" stop-color="#fbbf24" stop-opacity="1"/>
-    </linearGradient>
-
-    <!-- Gold Accent -->
-    <linearGradient id="goldAccent" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#fef08a"/>
-      <stop offset="50%" stop-color="#f59e0b"/>
-      <stop offset="100%" stop-color="#b45309"/>
-    </linearGradient>
-
-    <!-- Drop Shadows & Glow Filters -->
+    <!-- Filters -->
     <filter id="neonGlow" x="-20%" y="-20%" width="140%" height="140%">
-      <feGaussianBlur stdDeviation="16" result="blur"/>
+      <feGaussianBlur stdDeviation="12" result="blur"/>
       <feMerge>
         <feMergeNode in="blur"/>
         <feMergeNode in="blur"/>
@@ -55,104 +42,101 @@
       </feMerge>
     </filter>
 
-    <filter id="softShadow" x="-10%" y="-10%" width="120%" height="130%">
-      <feDropShadow dx="0" dy="12" stdDeviation="14" flood-color="#000" flood-opacity="0.6"/>
+    <filter id="heavyShadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="10" stdDeviation="12" flood-color="#000" flood-opacity="0.8"/>
     </filter>
   </defs>
 
-  <!-- App Squircle Card Base -->
-  <rect x="12" y="12" width="488" height="488" rx="112" fill="url(#bgGlow)"/>
-  <rect x="12" y="12" width="488" height="488" rx="112" stroke="url(#borderGrad)" stroke-width="6" opacity="0.85"/>
-  <rect x="22" y="22" width="468" height="468" rx="102" stroke="#ffffff" stroke-width="1.5" opacity="0.12"/>
+  <!-- App Icon Base Squircle -->
+  <rect x="16" y="16" width="480" height="480" rx="112" fill="url(#guessBg)"/>
+  <rect x="16" y="16" width="480" height="480" rx="112" stroke="url(#guessBorder)" stroke-width="6" opacity="0.9"/>
+  <rect x="26" y="26" width="460" height="460" rx="102" stroke="#ffffff" stroke-width="1.5" opacity="0.12"/>
 
-  <!-- Ambient Paint Splatter Elements -->
-  <g opacity="0.75" filter="url(#neonGlow)">
-    <circle cx="110" cy="130" r="14" fill="#06b6d4" opacity="0.8"/>
-    <circle cx="85" cy="175" r="7" fill="#38bdf8" opacity="0.9"/>
-    <circle cx="140" cy="95" r="6" fill="#0284c7" opacity="0.7"/>
-    <circle cx="410" cy="140" r="16" fill="#f59e0b" opacity="0.9"/>
-    <circle cx="440" cy="180" r="8" fill="#fbbf24" opacity="0.8"/>
-    <circle cx="380" cy="100" r="7" fill="#ef4444" opacity="0.75"/>
-    <circle cx="100" cy="380" r="11" fill="#a855f7" opacity="0.7"/>
-    <circle cx="420" cy="360" r="13" fill="#ec4899" opacity="0.7"/>
+  <!-- Ambient Paint Drops & Glow Spheres -->
+  <g opacity="0.85" filter="url(#neonGlow)">
+    <circle cx="95" cy="120" r="14" fill="#06b6d4" opacity="0.8"/>
+    <circle cx="70" cy="165" r="7" fill="#38bdf8" opacity="0.9"/>
+    <circle cx="420" cy="130" r="16" fill="#f59e0b" opacity="0.85"/>
+    <circle cx="445" cy="175" r="8" fill="#fbbf24" opacity="0.8"/>
+    <circle cx="110" cy="390" r="10" fill="#a855f7" opacity="0.75"/>
+    <circle cx="410" cy="380" r="12" fill="#ec4899" opacity="0.8"/>
   </g>
 
-  <!-- Sparkling Stars -->
+  <!-- Celebration Sparkles -->
   <g fill="#ffffff">
-    <!-- Star 1 -->
-    <path d="M 120 220 Q 120 235 105 235 Q 120 235 120 250 Q 120 235 135 235 Q 120 235 120 220 Z" opacity="0.9"/>
-    <!-- Star 2 -->
-    <path d="M 400 240 Q 400 252 388 252 Q 400 252 400 264 Q 400 252 412 252 Q 400 252 400 240 Z" opacity="0.85"/>
-    <!-- Star 3 -->
-    <path d="M 260 80 Q 260 92 248 92 Q 260 92 260 104 Q 260 92 272 92 Q 260 92 260 80 Z" opacity="0.95"/>
+    <path d="M 120 180 Q 120 195 105 195 Q 120 195 120 210 Q 120 195 135 195 Q 120 195 120 180 Z" opacity="0.95"/>
+    <path d="M 390 190 Q 390 202 378 202 Q 390 202 390 214 Q 390 202 402 202 Q 390 202 390 190 Z" opacity="0.9"/>
+    <path d="M 256 70 Q 256 84 242 84 Q 256 84 256 98 Q 256 84 270 84 Q 256 84 256 70 Z" opacity="0.95"/>
   </g>
 
-  <!-- The Swirling Brush Stroke Arc (behind numerals) -->
-  <path d="M 70 340 C 90 420, 210 440, 280 410 C 370 370, 440 280, 430 190 C 420 120, 340 100, 270 120 C 190 145, 120 230, 150 320" 
-        stroke="url(#brushTrail)" stroke-width="28" stroke-linecap="round" fill="none" opacity="0.4" filter="url(#neonGlow)"/>
+  <!-- Dynamic Swirling Paint Wave (behind text) -->
+  <path d="M 60 290 C 100 370, 220 400, 310 360 C 400 320, 450 240, 430 160 C 410 90, 310 80, 240 110 C 160 140, 90 230, 140 330" 
+        stroke="url(#strokeGrad)" stroke-width="26" stroke-linecap="round" fill="none" opacity="0.45" filter="url(#neonGlow)"/>
 
-  <!-- NUMERAL ELEVEN (11) - Central Hero Design -->
-  <g filter="url(#softShadow)">
-    <!-- LEFT DIGIT "1" -->
-    <g>
-      <!-- Subtle shadow offset -->
-      <path d="M 158 196 L 208 152 L 246 152 L 246 364 L 194 364 L 194 218 L 168 238 Z" fill="#000000" opacity="0.45" transform="translate(4, 6)"/>
-      <!-- Main body -->
-      <path d="M 158 196 L 208 152 L 246 152 L 246 364 L 194 364 L 194 218 L 168 238 Z" fill="url(#numOneLeft)"/>
-      <!-- Top highlight facet -->
-      <path d="M 158 196 L 208 152 L 246 152 L 246 166 L 210 166 L 168 206 Z" fill="#ffffff" opacity="0.35"/>
-      <!-- Side edge bevel -->
-      <path d="M 234 152 L 246 152 L 246 364 L 234 364 Z" fill="#0369a1" opacity="0.7"/>
-    </g>
+  <!-- Stylized Giant "GUESS" Text -->
+  <g filter="url(#heavyShadow)">
+    <!-- 3D Bevel Offset Shadow -->
+    <text x="256" y="278" 
+          font-family="'Impact', 'Outfit', 'Arial Black', sans-serif" 
+          font-size="112" 
+          font-weight="900" 
+          letter-spacing="5" 
+          text-anchor="middle" 
+          fill="#000000" 
+          opacity="0.7" 
+          transform="translate(4, 8)">
+      GUESS
+    </text>
 
-    <!-- RIGHT DIGIT "1" -->
-    <g>
-      <!-- Subtle shadow offset -->
-      <path d="M 284 196 L 334 152 L 372 152 L 372 364 L 320 364 L 320 218 L 294 238 Z" fill="#000000" opacity="0.45" transform="translate(4, 6)"/>
-      <!-- Main body -->
-      <path d="M 284 196 L 334 152 L 372 152 L 372 364 L 320 364 L 320 218 L 294 238 Z" fill="url(#numOneRight)"/>
-      <!-- Top highlight facet -->
-      <path d="M 284 196 L 334 152 L 372 152 L 372 166 L 336 166 L 294 206 Z" fill="#ffffff" opacity="0.35"/>
-      <!-- Side edge bevel -->
-      <path d="M 360 152 L 372 152 L 372 364 L 360 364 Z" fill="#be185d" opacity="0.7"/>
-    </g>
-  </g>
+    <!-- Main Text Fill with Vibrant Neon Gradient -->
+    <text x="256" y="278" 
+          font-family="'Impact', 'Outfit', 'Arial Black', sans-serif" 
+          font-size="112" 
+          font-weight="900" 
+          letter-spacing="5" 
+          text-anchor="middle" 
+          fill="url(#textGrad)">
+      GUESS
+    </text>
 
-  <!-- Dynamic Foreground Golden Paintbrush / Stylus -->
-  <g transform="translate(290, 85) rotate(42) scale(0.9)" filter="url(#softShadow)">
-    <!-- Brush Handle -->
-    <path d="M 20 -110 L 32 -110 L 28 30 L 24 30 Z" fill="url(#borderGrad)"/>
-    <!-- Ferrule (Silver collar) -->
-    <rect x="18" y="30" width="16" height="32" rx="3" fill="#e2e8f0" stroke="#94a3b8" stroke-width="1.5"/>
-    <line x1="18" y1="38" x2="34" y2="38" stroke="#64748b" stroke-width="1"/>
-    <line x1="18" y1="46" x2="34" y2="46" stroke="#64748b" stroke-width="1"/>
-    <!-- Brush Bristles (Golden Sable) -->
-    <path d="M 19 62 C 18 80, 26 102, 26 102 C 26 102, 34 80, 33 62 Z" fill="url(#goldAccent)"/>
-    <!-- Wet Paint Tip (Vibrant Orange Glow) -->
-    <path d="M 21 82 C 22 96, 26 104, 26 104 C 26 104, 30 96, 31 82 Z" fill="#fbbf24"/>
-    <circle cx="26" cy="107" r="4" fill="#f59e0b" filter="url(#neonGlow)"/>
-  </g>
-
-  <!-- Forefront Dynamic Paint Splash Arc -->
-  <path d="M 130 330 C 190 380, 320 388, 380 326" 
-        stroke="url(#brushTrail)" stroke-width="14" stroke-linecap="round" fill="none" opacity="0.9" filter="url(#neonGlow)"/>
-  
-  <path d="M 130 330 C 190 380, 320 388, 380 326" 
-        stroke="#ffffff" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.7"/>
-
-  <!-- Subtitle Ribbon: GUESS THE ELEVEN -->
-  <g transform="translate(256, 432)" filter="url(#softShadow)">
-    <!-- Badge Background -->
-    <rect x="-144" y="-20" width="288" height="40" rx="20" fill="#0d1322" stroke="url(#borderGrad)" stroke-width="2"/>
-    <!-- Tagline Text -->
-    <text x="0" y="6" font-family="'Outfit', 'Impact', system-ui, sans-serif" font-size="16" font-weight="900" fill="#ffffff" letter-spacing="3" text-anchor="middle">
-      GUESS THE ELEVEN
+    <!-- Glowing Text Stroke Highlight -->
+    <text x="256" y="278" 
+          font-family="'Impact', 'Outfit', 'Arial Black', sans-serif" 
+          font-size="112" 
+          font-weight="900" 
+          letter-spacing="5" 
+          text-anchor="middle" 
+          stroke="#ffffff" 
+          stroke-width="2.5" 
+          fill="none" 
+          opacity="0.65">
+      GUESS
     </text>
   </g>
 
-  <!-- Crown / Star Accent at top -->
-  <g transform="translate(256, 75)" filter="url(#neonGlow)">
-    <circle cx="0" cy="0" r="9" fill="#fbbf24"/>
-    <polygon points="0,-16 4,-4 16,0 4,4 0,16 -4,4 -16,0 -4,-4" fill="#ffffff"/>
+  <!-- Foreground Paint Splash Wave Swoosh -->
+  <path d="M 80 300 C 160 360, 340 370, 420 290" 
+        stroke="url(#strokeGrad)" stroke-width="16" stroke-linecap="round" fill="none" opacity="0.9" filter="url(#neonGlow)"/>
+  <path d="M 80 300 C 160 360, 340 370, 420 290" 
+        stroke="#ffffff" stroke-width="3" stroke-linecap="round" fill="none" opacity="0.8"/>
+
+  <!-- Artist Stylus / Golden Brush dipping in paint -->
+  <g transform="translate(360, 160) rotate(38) scale(0.85)" filter="url(#heavyShadow)">
+    <!-- Brush Handle -->
+    <path d="M 12 -120 L 26 -120 L 22 20 L 16 20 Z" fill="url(#guessBorder)"/>
+    <!-- Ferrule (Silver) -->
+    <rect x="14" y="20" width="12" height="24" rx="2" fill="#cbd5e1" stroke="#64748b" stroke-width="1"/>
+    <!-- Bristles -->
+    <path d="M 14 44 C 13 60, 20 80, 20 80 C 20 80, 27 60, 26 44 Z" fill="#f59e0b"/>
+    <!-- Glowing Paint Drop Tip -->
+    <circle cx="20" cy="85" r="5" fill="#38bdf8" filter="url(#neonGlow)"/>
+  </g>
+
+  <!-- Subtitle Tag: DRAW IT. SCORE 11. -->
+  <g transform="translate(256, 420)" filter="url(#heavyShadow)">
+    <rect x="-140" y="-18" width="280" height="36" rx="18" fill="#0d1424" stroke="url(#guessBorder)" stroke-width="2"/>
+    <text x="0" y="5" font-family="'Outfit', system-ui, sans-serif" font-size="13" font-weight="900" fill="#38bdf8" letter-spacing="3" text-anchor="middle">
+      DRAW IT • SCORE 11
+    </text>
   </g>
 </svg>

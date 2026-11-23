@@ -44,11 +44,11 @@ export const Header: React.FC = () => {
               <img src="/images/logo.png" alt="Guess The Eleven" className="w-full h-full object-cover rounded-[14px]" />
             </div>
             <div className="flex flex-col">
-              <span className="font-display font-black text-lg tracking-tight text-white group-hover:text-cyan-300 transition-colors leading-none">
-                GUESS THE <span className="text-orange-400">ELEVEN</span>
+              <span className="font-display font-black text-xl tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-pink-400 to-amber-400 group-hover:opacity-90 transition-opacity leading-none">
+                GUESS
               </span>
               <span className="text-[10px] text-cyan-400 font-bold tracking-widest uppercase mt-0.5">
-                SCORE 11
+                THE ELEVEN • SCORE 11
               </span>
             </div>
           </Link>

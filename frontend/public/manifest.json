@@ -1,7 +1,7 @@
 {
   "id": "/",
-  "name": "GUESS THE ELEVEN",
-  "short_name": "Guess 11",
+  "name": "GUESS",
+  "short_name": "GUESS",
   "description": "DRAW IT. GUESS IT. SCORE 11. Real-time 11-player drawing and guessing party game.",
   "start_url": "/",
   "scope": "/",

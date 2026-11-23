@@ -29,9 +29,9 @@ export const WelcomePage: React.FC = () => {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.1 }}
-          className="font-display font-black text-3xl sm:text-4xl text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-purple-300 to-cyan-400 mb-2"
+          className="font-display font-black text-4xl sm:text-5xl text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-pink-400 to-amber-400 mb-2 tracking-wider"
         >
-          GUESS THE ELEVEN
+          GUESS
         </motion.h1>
 
         <motion.p

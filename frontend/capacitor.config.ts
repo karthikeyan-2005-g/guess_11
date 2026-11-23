@@ -2,7 +2,7 @@ import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
   appId: 'com.guesstheeleven.app',
-  appName: 'GUESS THE ELEVEN',
+  appName: 'GUESS',
   webDir: 'dist',
   server: {
     androidScheme: 'https',
