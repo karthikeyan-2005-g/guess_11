@@ -39,3 +39,7 @@ frontend/android/.gradle/
 frontend/android/local.properties
 frontend/android/app/build/
 .capacitor/
+
+# CLI binaries
+scripts/gh.exe
+*.zip
