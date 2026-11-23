@@ -31,7 +31,7 @@ export const WelcomePage: React.FC = () => {
           transition={{ delay: 0.1 }}
           className="font-display font-black text-4xl sm:text-5xl text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-pink-400 to-amber-400 mb-2 tracking-wider"
         >
-          GUESS
+          GUESS 11
         </motion.h1>
 
         <motion.p

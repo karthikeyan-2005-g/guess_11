@@ -45,7 +45,7 @@ export const Header: React.FC = () => {
             </div>
             <div className="flex flex-col">
               <span className="font-display font-black text-xl tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-pink-400 to-amber-400 group-hover:opacity-90 transition-opacity leading-none">
-                GUESS
+                GUESS 11
               </span>
               <span className="text-[10px] text-cyan-400 font-bold tracking-widest uppercase mt-0.5">
                 THE ELEVEN • SCORE 11

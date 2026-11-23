@@ -53,14 +53,16 @@ jobs:
 
       - name: Prepare APK for Release
         run: |
-          cp frontend/android/app/build/outputs/apk/debug/app-debug.apk ./GuessTheEleven.apk
+          cp frontend/android/app/build/outputs/apk/debug/app-debug.apk ./Guess11.apk
           cp frontend/android/app/build/outputs/apk/debug/app-debug.apk ./GUESS.apk
+          cp frontend/android/app/build/outputs/apk/debug/app-debug.apk ./GuessTheEleven.apk
 
       - name: Upload APK to GitHub Artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: GUESS-Android-APK
+          name: Guess11-Android-APK
           path: |
+            ./Guess11.apk
             ./GUESS.apk
             ./GuessTheEleven.apk
           retention-days: 30
@@ -68,17 +70,24 @@ jobs:
       - name: Publish APK to GitHub Releases
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v1.0.4
-          name: "GUESS - Android APK (v1.0.4 - Live Sync & Host Start Fix)"
+          tag_name: v1.0.5
+          name: "GUESS 11 - Android APK (v1.0.5 - App Name Updated to Guess 11)"
           body: |
-            ## 🎨 GUESS (v1.0.4) ⚡
+            ## 🎨 GUESS 11 (v1.0.5) ⚡
             > **"DRAW IT. GUESS IT. SCORE 11."**
 
-            ### 🚀 What's New in v1.0.4:
-            - 🔄 **Real-Time Room Sync Fix**: Automatically connects and synchronizes room players between mobile APK and Web players.
-            - 👑 **Host Start Game Button**: Instantly renders the green Start Game button for the room host when 2+ players are present.
-            - ⚡ **Auto-Reconnecting Sockets**: Sockets now automatically authenticate upon login and auto-rejoin rooms without dropping connection.
+            ### 🚀 What's New in v1.0.5:
+            - 📱 **Official App Icon Name**: Application name under the mobile home screen launcher icon updated to **"Guess 11"**!
+            - 🔄 **Real-Time Room Sync**: Instant synchronization between mobile app and web browser players.
+            - 👑 **Host Controls**: Instant "START GAME" button display when 2+ players connect.
+            - ☁️ **24/7 Cloud Ready**: Permanent online multiplayer server on Render.
+
+            ### 📲 How to Install:
+            1. Under **Assets** below, tap **`Guess11.apk`** to download.
+            2. Install the APK on your phone.
+            3. Enjoy **Guess 11** with your friends!
           files: |
+            ./Guess11.apk
             ./GUESS.apk
             ./GuessTheEleven.apk
         env:
