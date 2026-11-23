@@ -70,22 +70,24 @@ jobs:
       - name: Publish APK to GitHub Releases
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v1.0.5
-          name: "GUESS 11 - Android APK (v1.0.5 - App Name Updated to Guess 11)"
+          tag_name: v1.0.6
+          name: "GUESS 11 - Android APK (v1.0.6 - Custom App Icon & Splash)"
           body: |
-            ## 🎨 GUESS 11 (v1.0.5) ⚡
+            ## 🎨 GUESS 11 (v1.0.6) ⚡
             > **"DRAW IT. GUESS IT. SCORE 11."**
 
-            ### 🚀 What's New in v1.0.5:
-            - 📱 **Official App Icon Name**: Application name under the mobile home screen launcher icon updated to **"Guess 11"**!
-            - 🔄 **Real-Time Room Sync**: Instant synchronization between mobile app and web browser players.
-            - 👑 **Host Controls**: Instant "START GAME" button display when 2+ players connect.
+            ### 🚀 What's New in v1.0.6:
+            - 🎨 **Custom App Icon**: Beautiful neon 3D "GUESS 11" artwork on your mobile home screen (replaces default Capacitor logo)!
+            - ✨ **Adaptive Icons & Dark Splash**: Full Android Adaptive Icon support with `#090D16` dark background and custom splash screens.
+            - 📱 **Official App Name**: Name displayed under the icon is **"Guess 11"**.
+            - 🔄 **Real-Time Multiplayer Sync**: Fixed player lobby synchronization and host START GAME controls.
             - ☁️ **24/7 Cloud Ready**: Permanent online multiplayer server on Render.
 
             ### 📲 How to Install:
-            1. Under **Assets** below, tap **`Guess11.apk`** to download.
-            2. Install the APK on your phone.
-            3. Enjoy **Guess 11** with your friends!
+            1. **Important**: Uninstall any previously installed version of Guess 11 from your phone first (this clears Android's cached app icon).
+            2. Under **Assets** below, tap **`Guess11.apk`** to download.
+            3. Install the APK on your phone.
+            4. Enjoy **Guess 11** with custom artwork!
           files: |
             ./Guess11.apk
             ./GUESS.apk
