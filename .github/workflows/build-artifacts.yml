@@ -28,7 +28,10 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Install Monorepo Dependencies
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+
+      - name: Install Dependencies
         run: npm install
 
       - name: Generate Database Client
@@ -37,17 +40,20 @@ jobs:
       - name: Build Web Application Bundle
         run: npm run build --workspace=frontend
 
-      - name: Synchronize Capacitor Android Assets
+      - name: Sync Android Capacitor Assets
         run: |
-          cd frontend
-          npx cap sync android
+          npx --prefix frontend cap sync android
+
+      - name: Accept Android SDK Licenses
+        run: |
+          yes | sdkmanager --licenses || true
 
       - name: Make Gradlew Executable
         run: chmod +x frontend/android/gradlew
 
       - name: Build Android Debug APK
         working-directory: frontend/android
-        run: ./gradlew assembleDebug --no-daemon
+        run: ./gradlew assembleDebug --no-daemon --stacktrace
 
       - name: Prepare APK for Release
         run: |
@@ -69,11 +75,20 @@ jobs:
             ## 🎨 GUESS THE ELEVEN ⚡
             > **"DRAW IT. GUESS IT. SCORE 11."**
 
-            ### 📱 How to Download and Install on Android Mobile:
-            1. Under **Assets** below, click **`GuessTheEleven.apk`** to download directly to your mobile phone.
-            2. Tap the downloaded file in your Notification bar or Downloads folder.
-            3. Tap **Install** (allow installation from this source if prompted).
+            ### 📱 How to Download & Install on Android Mobile:
+            1. Under **Assets** below, tap **`GuessTheEleven.apk`** to download directly to your mobile phone.
+            2. Open the downloaded file from your Downloads folder.
+            3. Tap **Install** (if prompted, enable "Allow installation from this source").
             4. Launch and play with up to 11 players!
           files: ./GuessTheEleven.apk
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload Logs on Failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-failure-logs
+          path: |
+            frontend/android/**/build/reports/
+            ~/.gradle/daemon/**/*.log
