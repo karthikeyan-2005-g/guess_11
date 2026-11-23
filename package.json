@@ -17,7 +17,7 @@
     "db:generate": "npm run db:generate --workspace=backend",
     "db:migrate": "npm run db:migrate --workspace=backend",
     "db:seed": "npm run db:seed --workspace=backend",
-    "render:build": "npm run db:generate && npm run db:migrate && npm run db:seed && npm run build --workspace=frontend && npm run build --workspace=backend",
+    "render:build": "npm run db:generate && npm run db:migrate && (npm run db:seed || true) && npm run build --workspace=frontend && npm run build --workspace=backend",
     "render:start": "npm run start --workspace=backend",
     "mobile:android": "npm run mobile:android --workspace=frontend",
     "mobile:open:android": "npm run mobile:open:android --workspace=frontend",
