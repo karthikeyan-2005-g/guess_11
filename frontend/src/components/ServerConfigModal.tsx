@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Modal } from './Modal';
 import { getServerBaseUrl, setServerBaseUrl } from '../services/api';
-import { Server, Wifi, CheckCircle2, AlertCircle, RefreshCw, Zap } from 'lucide-react';
+import { Server, Wifi, Cloud, CheckCircle2, AlertCircle, RefreshCw, Zap } from 'lucide-react';
 import audioService from '../services/audioService';
 
 interface ServerConfigModalProps {
@@ -20,6 +20,7 @@ export const ServerConfigModal: React.FC<ServerConfigModalProps> = ({
   const [testStatus, setTestStatus] = useState<'idle' | 'testing' | 'success' | 'error'>('idle');
   const [testMessage, setTestMessage] = useState<string>('');
 
+  const defaultRenderUrl = 'https://guess-the-eleven.onrender.com';
   const defaultLocalIp = 'http://10.161.180.82:3001';
   const defaultLocalhost = 'http://localhost:3001';
 
@@ -33,7 +34,7 @@ export const ServerConfigModal: React.FC<ServerConfigModalProps> = ({
 
     try {
       const controller = new AbortController();
-      const timer = setTimeout(() => controller.abort(), 4000);
+      const timer = setTimeout(() => controller.abort(), 6000);
 
       const res = await fetch(`${target}/api/health`, {
         signal: controller.signal,
@@ -55,7 +56,7 @@ export const ServerConfigModal: React.FC<ServerConfigModalProps> = ({
       setTestStatus('error');
       setTestMessage(
         err.name === 'AbortError'
-          ? 'Connection timed out (4s). Ensure your PC & phone are on the same Wi-Fi/Hotspot.'
+          ? 'Connection timed out (6s). Render free instances take ~30-50s to wake up on first ping.'
           : `Connection failed: ${err.message || 'Network unreachable'}`
       );
       audioService.playWrongGuess();
@@ -80,13 +81,13 @@ export const ServerConfigModal: React.FC<ServerConfigModalProps> = ({
     <Modal isOpen={isOpen} onClose={onClose} title="Game Server Connection">
       <div className="space-y-4 text-slate-200 text-sm">
         <p className="text-xs text-slate-400">
-          Connect your mobile device to the host game server over Wi-Fi or Hotspot.
+          Connect to a 24/7 Render cloud server or your local computer over Wi-Fi.
         </p>
 
         {/* URL Input */}
         <div>
           <label className="block text-xs font-bold uppercase tracking-wider text-cyan-400 mb-1.5">
-            Server Address (IP & Port)
+            Server Address (Render Cloud or Local IP)
           </label>
           <div className="relative">
             <Server className="w-4 h-4 absolute left-3 top-3.5 text-slate-400" />
@@ -97,7 +98,7 @@ export const ServerConfigModal: React.FC<ServerConfigModalProps> = ({
                 setUrlInput(e.target.value);
                 setTestStatus('idle');
               }}
-              placeholder="http://10.161.180.82:3001"
+              placeholder="https://your-service.onrender.com"
               className="w-full pl-9 pr-3 py-2.5 rounded-xl bg-slate-900 border border-slate-700 text-white font-mono text-xs focus:ring-2 focus:ring-cyan-400 focus:outline-none"
             />
           </div>
@@ -106,9 +107,17 @@ export const ServerConfigModal: React.FC<ServerConfigModalProps> = ({
         {/* Quick Presets */}
         <div>
           <span className="block text-[11px] font-semibold text-slate-400 uppercase tracking-wide mb-1.5">
-            Quick Select
+            Quick Presets
           </span>
           <div className="flex flex-wrap gap-2">
+            <button
+              type="button"
+              onClick={() => handlePreset(defaultRenderUrl)}
+              className="px-3 py-1.5 rounded-lg bg-purple-950/70 hover:bg-purple-900 text-xs text-purple-300 font-semibold border border-purple-500/40 flex items-center gap-1.5 transition-all shadow-sm"
+            >
+              <Cloud className="w-3.5 h-3.5 text-purple-400" />
+              ☁️ Render Cloud 24/7
+            </button>
             <button
               type="button"
               onClick={() => handlePreset(defaultLocalIp)}
@@ -145,9 +154,9 @@ export const ServerConfigModal: React.FC<ServerConfigModalProps> = ({
               <p className="font-semibold">{testMessage}</p>
               {testStatus === 'error' && (
                 <ul className="list-disc list-inside mt-1.5 text-[11px] text-red-200 space-y-0.5">
-                  <li>Make sure backend server is running on your PC.</li>
-                  <li>Ensure your phone is connected to the same Wi-Fi or phone hotspot.</li>
-                  <li>Verify Windows Defender allows inbound traffic on port 3001.</li>
+                  <li>If using Render: Free tier instances sleep when idle. Wait ~30s and click Test again.</li>
+                  <li>If using Wi-Fi: Make sure PC and phone are on same Wi-Fi/Hotspot.</li>
+                  <li>Check that your server URL begins with https:// (or http:// for local IP).</li>
                 </ul>
               )}
             </div>

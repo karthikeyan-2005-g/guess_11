@@ -1,6 +1,9 @@
 import express, { Express } from 'express';
 import cors from 'cors';
 import helmet from 'helmet';
+import path from 'path';
+import fs from 'fs';
+import { fileURLToPath } from 'url';
 import { ENV } from './config/env.js';
 import { errorHandler } from './middleware/errorHandler.js';
 import { apiLimiter } from './middleware/rateLimiter.js';
@@ -10,6 +13,10 @@ import profileRoutes from './routes/profile.js';
 import roomRoutes from './routes/rooms.js';
 import userRoutes from './routes/users.js';
 import healthRoutes from './routes/health.js';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+const frontendDist = path.resolve(__dirname, '../../frontend/dist');
 
 export function createApp(): Express {
   const app = express();
@@ -47,6 +54,17 @@ export function createApp(): Express {
   app.use('/api/profile', profileRoutes);
   app.use('/api/rooms', roomRoutes);
   app.use('/api/users', userRoutes);
+
+  // Serve Frontend Single-Page App if built (e.g. for Render 24/7 cloud deployment)
+  if (fs.existsSync(frontendDist)) {
+    app.use(express.static(frontendDist));
+    app.get('*', (req, res, next) => {
+      if (req.path.startsWith('/api') || req.path.startsWith('/socket.io')) {
+        return next();
+      }
+      res.sendFile(path.join(frontendDist, 'index.html'));
+    });
+  }
 
   // Error Handling
   app.use(errorHandler);

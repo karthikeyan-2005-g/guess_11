@@ -5,6 +5,11 @@ export function getServerBaseUrl(): string {
     return custom.replace(/\/$/, '');
   }
 
+  // Check if a cloud API URL was injected at build time (e.g. Render)
+  if (import.meta.env.VITE_API_URL) {
+    return (import.meta.env.VITE_API_URL as string).replace(/\/$/, '');
+  }
+
   // Detect if running inside Capacitor Native APK (origin is localhost without Vite port or capacitor://)
   const isCapacitorNative =
     typeof window !== 'undefined' &&
