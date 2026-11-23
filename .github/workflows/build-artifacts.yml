@@ -41,19 +41,15 @@ jobs:
         run: npm run build --workspace=frontend
 
       - name: Sync Android Capacitor Assets
-        run: |
-          npx --prefix frontend cap sync android
-
-      - name: Accept Android SDK Licenses
-        run: |
-          yes | sdkmanager --licenses || true
+        working-directory: frontend
+        run: npx cap sync android
 
       - name: Make Gradlew Executable
         run: chmod +x frontend/android/gradlew
 
       - name: Build Android Debug APK
         working-directory: frontend/android
-        run: ./gradlew assembleDebug --no-daemon --stacktrace
+        run: ./gradlew assembleDebug --no-daemon
 
       - name: Prepare APK for Release
         run: |
