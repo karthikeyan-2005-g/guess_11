@@ -1,0 +1,154 @@
+// Prisma schema for GUESS THE ELEVEN
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                  String               @id @default(uuid())
+  userId              String               @unique // login handle e.g. "player11"
+  username            String // display name
+  email               String               @unique
+  passwordHash        String
+  role                String               @default("USER") // USER, ADMIN
+  isBanned            Boolean              @default(false)
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
+
+  profile             UserProfile?
+  statistics          GameStatistics?
+  sessions            Session[]
+  refreshTokens       RefreshToken[]
+  passwordResetTokens PasswordResetToken[]
+  hostedRooms         GameRoom[]
+  scores              Score[]
+}
+
+model UserProfile {
+  id               String   @id @default(uuid())
+  userId           String   @unique
+  user             User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  avatar           String   @default("avatar-1")
+  fullName         String?
+  bio              String?
+  favoriteCategory String   @default("General")
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+}
+
+model GameStatistics {
+  id             String   @id @default(uuid())
+  userId         String   @unique
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  gamesPlayed    Int      @default(0)
+  gamesWon       Int      @default(0)
+  totalScore     Int      @default(0)
+  bestScore      Int      @default(0)
+  correctGuesses Int      @default(0)
+  drawingRounds  Int      @default(0)
+  winPercentage  Float    @default(0.0)
+  updatedAt      DateTime @updatedAt
+}
+
+model GameRoom {
+  id                 String   @id @default(uuid())
+  code               String   @unique // e.g. GTE-A829
+  name               String
+  hostId             String
+  host               User     @relation(fields: [hostId], references: [id])
+  status             String   @default("WAITING") // WAITING, IN_PROGRESS, FINISHED
+  gameMode           String   @default("NORMAL") // NORMAL, DOUBLE11, SPEED, HARD, MYSTERY
+  maxPlayers         Int      @default(11)
+  roundDuration      Int      @default(90)
+  totalRounds        Int      @default(11)
+  currentRoundNumber Int      @default(0)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  games              Game[]
+}
+
+model Game {
+  id           String      @id @default(uuid())
+  roomId       String
+  room         GameRoom    @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  status       String      @default("ACTIVE") // ACTIVE, COMPLETED
+  winnerUserId String?
+  startedAt    DateTime    @default(now())
+  endedAt      DateTime?
+
+  rounds       GameRound[]
+  scores       Score[]
+}
+
+model GameRound {
+  id            String        @id @default(uuid())
+  gameId        String
+  game          Game          @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  roundNumber   Int
+  drawerUserId  String
+  objectId      String
+  object        DrawingObject @relation(fields: [objectId], references: [id])
+  startedAt     DateTime      @default(now())
+  endedAt       DateTime?
+  drawingPoints Int           @default(0)
+}
+
+model DrawingObject {
+  id         String      @id @default(uuid())
+  name       String      @unique
+  category   String
+  difficulty String      @default("EASY") // EASY, MEDIUM, HARD
+  synonyms   String // Comma-separated synonyms
+  enabled    Boolean     @default(true)
+  createdAt  DateTime    @default(now())
+
+  gameRounds GameRound[]
+}
+
+model Score {
+  id        String   @id @default(uuid())
+  gameId    String
+  game      Game     @relation(fields: [gameId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  points    Int      @default(0)
+  rank      Int?
+  createdAt DateTime @default(now())
+}
+
+model Session {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  token     String   @unique
+  userAgent String?
+  ipAddress String?
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+}
+
+model RefreshToken {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  token     String   @unique
+  isRevoked Boolean  @default(false)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+}
+
+model PasswordResetToken {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  token     String   @unique
+  isUsed    Boolean  @default(false)
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+}

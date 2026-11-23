@@ -1,0 +1,40 @@
+{
+  "name": "guess-the-eleven",
+  "version": "1.0.0",
+  "description": "GUESS THE ELEVEN - Real-time 11-player drawing and guessing party game",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "scripts": {
+    "dev": "concurrently -k -p \"[{name}]\" -n \"SERVER,CLIENT\" -c \"cyan.bold,magenta.bold\" \"npm run server\" \"npm run client\"",
+    "build": "npm run build --workspace=backend && npm run build --workspace=frontend",
+    "test": "npm run test --workspace=backend && npm run test --workspace=frontend",
+    "lint": "npm run lint --workspace=backend && npm run lint --workspace=frontend",
+    "server": "npm run dev --workspace=backend",
+    "client": "npm run dev --workspace=frontend",
+    "db:generate": "npm run db:generate --workspace=backend",
+    "db:migrate": "npm run db:migrate --workspace=backend",
+    "db:seed": "npm run db:seed --workspace=backend",
+    "mobile:android": "npm run mobile:android --workspace=frontend",
+    "mobile:open:android": "npm run mobile:open:android --workspace=frontend",
+    "mobile:ios": "npm run mobile:ios --workspace=frontend",
+    "mobile:open:ios": "npm run mobile:open:ios --workspace=frontend",
+    "tunnel": "npx localtunnel --port 5173"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2"
+  },
+  "keywords": [
+    "multiplayer",
+    "drawing-game",
+    "party-game",
+    "guess-the-eleven",
+    "socketio",
+    "react",
+    "capacitor"
+  ],
+  "author": "Guess The Eleven Team",
+  "license": "MIT"
+}
