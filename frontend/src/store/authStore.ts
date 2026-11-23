@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { User } from '../types/auth';
 import { authService } from '../services/authService';
+import socketService from '../services/socketService';
 
 interface AuthStore {
   user: User | null;
@@ -54,6 +55,8 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
       localStorage.setItem('gte_refresh_token', tokens.refreshToken);
       localStorage.setItem('gte_user', JSON.stringify(user));
 
+      socketService.updateAuthToken(tokens.accessToken);
+
       set({
         user,
         token: tokens.accessToken,
@@ -80,6 +83,8 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
       localStorage.setItem('gte_refresh_token', tokens.refreshToken);
       localStorage.setItem('gte_user', JSON.stringify(user));
 
+      socketService.updateAuthToken(tokens.accessToken);
+
       set({
         user,
         token: tokens.accessToken,
@@ -99,6 +104,7 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
     } catch (e) {
       // ignore
     } finally {
+      socketService.disconnect();
       localStorage.removeItem('gte_access_token');
       localStorage.removeItem('gte_refresh_token');
       localStorage.removeItem('gte_user');

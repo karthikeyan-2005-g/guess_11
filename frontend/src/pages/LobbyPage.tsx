@@ -7,6 +7,7 @@ import { PlayerGrid } from '../components/PlayerGrid';
 import { Modal } from '../components/Modal';
 import { shareService } from '../services/shareService';
 import socketService from '../services/socketService';
+import { apiRequest } from '../services/api';
 import audioService from '../services/audioService';
 import {
   Share2,
@@ -31,7 +32,7 @@ export const LobbyPage: React.FC = () => {
   const navigate = useNavigate();
   const roomCode = code?.toUpperCase() || '';
 
-  const { room, players, isHost, resetRoom } = useRoomStore();
+  const { room, players, isHost, resetRoom, setRoom, updatePlayers } = useRoomStore();
   const { status, countdown } = useGameStore();
   const { user } = useAuthStore();
 
@@ -80,12 +81,24 @@ export const LobbyPage: React.FC = () => {
   const playerCount = Object.keys(players).length;
   const isFull = playerCount >= 11;
 
-  // Auto-connect socket to this room upon mounting
+  // Auto-connect socket to this room upon mounting + REST API fallback
   useEffect(() => {
     if (roomCode) {
-      socketService.emit('ROOM_JOIN', { roomCode });
+      socketService.joinRoom(roomCode);
+
+      // Fast immediate sync via REST API
+      apiRequest(`/rooms/${roomCode}`)
+        .then((res) => {
+          if (res?.data) {
+            setRoom(res.data);
+            if (res.data.players) {
+              updatePlayers(res.data.players);
+            }
+          }
+        })
+        .catch(() => {});
     }
-  }, [roomCode]);
+  }, [roomCode, setRoom, updatePlayers]);
 
   // Navigate to game page once game starts
   useEffect(() => {
@@ -145,25 +158,6 @@ export const LobbyPage: React.FC = () => {
         )}
       </AnimatePresence>
 
-      {/* Helpful Mobile Wi-Fi Notice Banner if user is on localhost */}
-      {isLocalhost && (
-        <div className="mb-4 p-3.5 rounded-2xl bg-cyan-950/70 border border-cyan-500/40 text-cyan-200 text-xs flex flex-col sm:flex-row items-center justify-between gap-3 shadow-md">
-          <div className="flex items-center gap-2.5 text-center sm:text-left">
-            <Smartphone className="w-5 h-5 text-cyan-400 shrink-0" />
-            <div>
-              <strong className="text-white block sm:inline">Playing with friends on mobile phones? </strong>
-              <span>Friends on other devices cannot open "localhost". Use your Wi-Fi link below!</span>
-            </div>
-          </div>
-          <button
-            type="button"
-            onClick={() => setShowShareModal(true)}
-            className="px-3 py-1.5 rounded-xl bg-cyan-500 hover:bg-cyan-400 text-slate-950 font-black text-xs shrink-0 shadow-neon-cyan"
-          >
-            VIEW SHARE LINKS
-          </button>
-        </div>
-      )}
 
       {/* Top Lobby Bar */}
       <div className="glass-panel rounded-3xl p-4 sm:p-6 mb-6 border border-slate-700 shadow-xl flex flex-col md:flex-row items-center justify-between gap-4">

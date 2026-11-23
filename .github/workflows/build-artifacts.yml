@@ -68,22 +68,16 @@ jobs:
       - name: Publish APK to GitHub Releases
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v1.0.3
-          name: "GUESS - Android APK (v1.0.3 - 24/7 Live Cloud Connected)"
+          tag_name: v1.0.4
+          name: "GUESS - Android APK (v1.0.4 - Live Sync & Host Start Fix)"
           body: |
-            ## 🎨 GUESS (v1.0.3) ⚡
+            ## 🎨 GUESS (v1.0.4) ⚡
             > **"DRAW IT. GUESS IT. SCORE 11."**
 
-            ### 🚀 What's New in v1.0.3:
-            - ☁️ **Permanent 24/7 Live Cloud Server**: Pre-configured to automatically connect to **https://guess-the-eleven-umyl.onrender.com**!
-            - 📱 **Zero Setup Required**: Install the APK and play from anywhere on mobile data (4G/5G) or Wi-Fi — no PC needed!
-            - 🌐 **Web Game Live**: Play in browser at **https://guess-the-eleven-umyl.onrender.com**!
-
-            ### 📲 How to Install & Play:
-            1. Under **Assets** below, tap **`GUESS.apk`** to download directly to your mobile phone.
-            2. Open the downloaded file and tap **Install**.
-            3. Open GUESS on your phone — it connects automatically to the 24/7 cloud server!
-            4. Register or Login and enjoy!
+            ### 🚀 What's New in v1.0.4:
+            - 🔄 **Real-Time Room Sync Fix**: Automatically connects and synchronizes room players between mobile APK and Web players.
+            - 👑 **Host Start Game Button**: Instantly renders the green Start Game button for the room host when 2+ players are present.
+            - ⚡ **Auto-Reconnecting Sockets**: Sockets now automatically authenticate upon login and auto-rejoin rooms without dropping connection.
           files: |
             ./GUESS.apk
             ./GuessTheEleven.apk

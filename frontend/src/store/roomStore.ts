@@ -22,16 +22,20 @@ export const useRoomStore = create<RoomStore>((set, get) => ({
   roomFullCelebrated: false,
 
   setRoom: (room) => {
-    const currentUserId = (() => {
+    const currentUser = (() => {
       try {
         const u = localStorage.getItem('gte_user');
-        return u ? JSON.parse(u).userId : null;
+        return u ? JSON.parse(u) : null;
       } catch {
         return null;
       }
     })();
 
-    const isHost = room?.hostId === currentUserId;
+    const isHost = !!(
+      room?.hostId &&
+      currentUser &&
+      (room.hostId === currentUser.userId || room.hostId === currentUser.id)
+    );
     set({
       room,
       players: room?.players || {},
@@ -41,21 +45,26 @@ export const useRoomStore = create<RoomStore>((set, get) => ({
   },
 
   updatePlayers: (players) => {
-    const currentUserId = (() => {
+    const currentUser = (() => {
       try {
         const u = localStorage.getItem('gte_user');
-        return u ? JSON.parse(u).userId : null;
+        return u ? JSON.parse(u) : null;
       } catch {
         return null;
       }
     })();
 
     const room = get().room;
+    const isHost = !!(
+      room?.hostId &&
+      currentUser &&
+      (room.hostId === currentUser.userId || room.hostId === currentUser.id)
+    );
     if (room) {
       set({
         players,
         room: { ...room, players },
-        isHost: room.hostId === currentUserId,
+        isHost,
       });
     } else {
       set({ players });
