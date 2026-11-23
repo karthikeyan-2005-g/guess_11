@@ -6,6 +6,7 @@ import { AVATARS } from '../data/avatars';
 import { validateUserId, validatePassword } from '../utils/validation';
 import { Eye, EyeOff, Lock, Mail, User as UserIcon, CheckCircle2, AlertCircle, Sparkles, Server } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { ServerConfigModal } from '../components/ServerConfigModal';
 import audioService from '../services/audioService';
 
 export const RegisterPage: React.FC = () => {
@@ -24,18 +25,18 @@ export const RegisterPage: React.FC = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
   const [serverUrl, setServerUrlState] = useState<string>(getServerBaseUrl());
+  const [isServerModalOpen, setIsServerModalOpen] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
   const handleEditServer = () => {
-    const current = getServerBaseUrl() || 'http://10.161.180.82:3001';
-    const newUrl = window.prompt('Enter Game Server URL (Wi-Fi or Tunnel):\nExample: http://10.161.180.82:3001', current);
-    if (newUrl !== null) {
-      setServerBaseUrl(newUrl.trim());
-      setServerUrlState(newUrl.trim());
-      setError(null);
-    }
+    setIsServerModalOpen(true);
+  };
+
+  const handleServerSaved = (newUrl: string) => {
+    setServerUrlState(newUrl);
+    setError(null);
   };
 
   const pwdValidation = validatePassword(password);
@@ -340,6 +341,12 @@ export const RegisterPage: React.FC = () => {
             Change
           </button>
         </div>
+
+        <ServerConfigModal
+          isOpen={isServerModalOpen}
+          onClose={() => setIsServerModalOpen(false)}
+          onSaved={handleServerSaved}
+        />
       </motion.div>
     </div>
   );
