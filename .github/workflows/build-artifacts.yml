@@ -1,57 +1,22 @@
-name: Build and Upload Artifacts
+name: Build Android APK and Upload Artifacts
 
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
   workflow_dispatch:
 
+permissions:
+  contents: write
+
 jobs:
-  build-web-and-backend:
-    name: Build Web & Backend Artifacts
+  build-and-release-apk:
+    name: Build Android APK & GitHub Release
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
-          cache: 'npm'
-
-      - name: Install Dependencies
-        run: npm ci
-
-      - name: Run Tests
-        run: npm run test
-
-      - name: Build Web and Backend
-        run: npm run build
-
-      - name: Upload Web PWA Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: guess-the-eleven-web-pwa
-          path: frontend/dist/
-          retention-days: 30
-
-      - name: Upload Backend Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: guess-the-eleven-backend
-          path: backend/dist/
-          retention-days: 30
-
-  build-android-apk:
-    name: Build Android APK Artifact
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
-
-      - name: Setup Node.js
+      - name: Setup Node.js 20
         uses: actions/setup-node@v4
         with:
           node-version: 20
@@ -63,15 +28,20 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
+      - name: Install Monorepo Dependencies
+        run: npm install
 
-      - name: Install Dependencies
-        run: npm ci
+      - name: Generate Database Client
+        run: npm run db:generate
 
-      - name: Build Frontend & Sync Android
+      - name: Run Unit Tests
+        run: npm run test
+
+      - name: Build Web Application Bundle
+        run: npm run build --workspace=frontend
+
+      - name: Synchronize Capacitor Android Assets
         run: |
-          npm run build --workspace=frontend
           cd frontend
           npx cap sync android
 
@@ -82,9 +52,31 @@ jobs:
         working-directory: frontend/android
         run: ./gradlew assembleDebug --no-daemon --stacktrace
 
-      - name: Upload Android APK Artifact
+      - name: Rename APK for Release
+        run: |
+          cp frontend/android/app/build/outputs/apk/debug/app-debug.apk ./GuessTheEleven.apk
+
+      - name: Upload APK to GitHub Artifacts
         uses: actions/upload-artifact@v4
         with:
           name: GuessTheEleven-Android-APK
-          path: frontend/android/app/build/outputs/apk/debug/app-debug.apk
+          path: ./GuessTheEleven.apk
           retention-days: 30
+
+      - name: Publish APK to GitHub Releases
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v1.0.0
+          name: "GUESS THE ELEVEN - Android APK (v1.0.0)"
+          body: |
+            ## 🎨 GUESS THE ELEVEN ⚡
+            > **"DRAW IT. GUESS IT. SCORE 11."**
+
+            ### 📱 How to Download and Install on Android Mobile:
+            1. Click **`GuessTheEleven.apk`** below to download directly to your mobile phone.
+            2. Tap the downloaded file in your Notification bar or Downloads folder.
+            3. Tap **Install** (allow installation from this source if prompted).
+            4. Launch and play with up to 11 players!
+          files: ./GuessTheEleven.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
