@@ -115,13 +115,11 @@ export const RegisterPage: React.FC = () => {
       >
         {/* Logo and Header */}
         <div className="flex flex-col items-center text-center mb-6">
-          <div className="w-14 h-14 rounded-2xl bg-gradient-to-tr from-orange-500 via-purple-600 to-cyan-400 p-0.5 shadow-neon-orange mb-3">
-            <div className="w-full h-full bg-slate-950 rounded-[14px] flex items-center justify-center font-display font-black text-2xl text-white">
-              11
-            </div>
+          <div className="w-12 h-12 rounded-2xl bg-indigo-600 mb-2.5 flex items-center justify-center font-display font-black text-2xl text-white shadow-sm">
+            11
           </div>
           <h2 className="font-display font-black text-2xl text-white">CREATE ACCOUNT</h2>
-          <p className="text-xs text-cyan-400 font-extrabold uppercase tracking-widest mt-0.5">
+          <p className="text-xs text-slate-400 font-bold uppercase tracking-wider mt-0.5">
             JOIN GUESS THE ELEVEN
           </p>
         </div>
@@ -306,7 +304,7 @@ export const RegisterPage: React.FC = () => {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full py-3.5 rounded-2xl bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-500 hover:from-orange-400 hover:to-yellow-400 text-slate-950 font-black text-base shadow-neon-orange disabled:opacity-50 flex items-center justify-center gap-2 transform active:scale-95 transition-all mt-4"
+            className="w-full py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-base shadow-sm disabled:opacity-50 flex items-center justify-center gap-2 transform active:scale-95 transition-all mt-4"
           >
             {isSubmitting ? (
               <div className="w-5 h-5 border-2 border-slate-950 border-t-transparent rounded-full animate-spin" />

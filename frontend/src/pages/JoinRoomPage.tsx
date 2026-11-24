@@ -110,7 +110,7 @@ export const JoinRoomPage: React.FC = () => {
 
           <button
             type="submit"
-            className="w-full py-4 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 text-slate-950 font-black text-lg shadow-neon-cyan transform active:scale-95 transition-all"
+            className="w-full py-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-lg shadow-sm transform active:scale-95 transition-all"
           >
             ENTER ROOM
           </button>

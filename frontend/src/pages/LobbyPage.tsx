@@ -167,7 +167,7 @@ export const LobbyPage: React.FC = () => {
             className="fixed inset-0 z-50 flex items-center justify-center bg-slate-950/90 backdrop-blur-md"
           >
             <div className="flex flex-col items-center">
-              <span className="font-display font-black text-9xl text-transparent bg-clip-text bg-gradient-to-tr from-orange-400 via-amber-300 to-yellow-400 drop-shadow-2xl animate-pulse-fast">
+              <span className="font-display font-black text-9xl text-amber-400 drop-shadow-lg">
                 {countdown}
               </span>
               <p className="text-xl font-black text-cyan-400 uppercase tracking-widest mt-4">
@@ -210,7 +210,7 @@ export const LobbyPage: React.FC = () => {
           <button
             type="button"
             onClick={() => setShowShareModal(true)}
-            className="px-4 py-2.5 rounded-2xl bg-gradient-to-r from-cyan-500 to-blue-600 text-slate-950 text-xs font-black flex items-center gap-2 shadow-neon-cyan transition-all hover:scale-105"
+            className="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold flex items-center gap-2 shadow-sm transition-all"
           >
             <Share2 className="w-4 h-4" />
             <span>SHARE ROOM</span>
@@ -219,7 +219,7 @@ export const LobbyPage: React.FC = () => {
           <button
             type="button"
             onClick={() => handleCopyLink(activeShareUrl)}
-            className="px-3.5 py-2.5 rounded-2xl glass-card hover:bg-slate-800 text-slate-200 text-xs font-bold flex items-center gap-2 border border-slate-700 transition-all"
+            className="px-3.5 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs font-bold flex items-center gap-2 border border-slate-700 transition-all"
             title="Copy invitation link"
           >
             {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
@@ -229,7 +229,7 @@ export const LobbyPage: React.FC = () => {
           <button
             type="button"
             onClick={() => shareService.shareWhatsApp({ roomCode, roomUrl: activeShareUrl })}
-            className="p-2.5 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white transition-all shadow-md"
+            className="p-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white transition-all shadow-sm"
             title="Share via WhatsApp"
           >
             <MessageCircle className="w-4 h-4" />
@@ -238,7 +238,7 @@ export const LobbyPage: React.FC = () => {
           <button
             type="button"
             onClick={() => shareService.shareTelegram({ roomCode, roomUrl: activeShareUrl })}
-            className="p-2.5 rounded-2xl bg-sky-500 hover:bg-sky-400 text-white transition-all shadow-md"
+            className="p-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white transition-all shadow-sm"
             title="Share via Telegram"
           >
             <Send className="w-4 h-4" />
@@ -247,7 +247,7 @@ export const LobbyPage: React.FC = () => {
           <button
             type="button"
             onClick={handleLeave}
-            className="px-3.5 py-2.5 rounded-2xl bg-rose-950/60 hover:bg-rose-900/80 text-rose-300 text-xs font-bold border border-rose-800/40 flex items-center gap-1.5 transition-all"
+            className="px-3.5 py-2.5 rounded-xl bg-rose-900/50 hover:bg-rose-800 text-rose-200 text-xs font-bold border border-rose-800/40 flex items-center gap-1.5 transition-all"
           >
             <LogOut className="w-4 h-4" />
             <span>LEAVE</span>
@@ -290,7 +290,7 @@ export const LobbyPage: React.FC = () => {
               type="button"
               disabled={playerCount < 2}
               onClick={handleStartGame}
-              className="w-full py-4 rounded-2xl bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-500 hover:from-orange-400 hover:to-yellow-400 text-slate-950 font-black text-lg shadow-neon-orange disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2.5 transform active:scale-95 transition-all"
+              className="w-full py-4 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-lg shadow-sm disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2.5 transform active:scale-95 transition-all"
             >
               <Play className="w-6 h-6 fill-current" />
               START GAME ({playerCount}/11 PLAYERS)

@@ -35,9 +35,9 @@ export default {
         },
       },
       boxShadow: {
-        'neon-cyan': '0 0 20px -3px rgba(6, 182, 212, 0.5)',
-        'neon-purple': '0 0 20px -3px rgba(139, 92, 246, 0.5)',
-        'neon-orange': '0 0 20px -3px rgba(249, 115, 22, 0.6)',
+        'neon-cyan': '0 4px 12px 0 rgba(6, 182, 212, 0.25)',
+        'neon-purple': '0 4px 12px 0 rgba(139, 92, 246, 0.25)',
+        'neon-orange': '0 4px 12px 0 rgba(249, 115, 22, 0.25)',
       },
     },
   },

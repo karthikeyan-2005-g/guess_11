@@ -136,18 +136,20 @@ jobs:
       - name: Publish to GitHub Releases
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v1.0.9
-          name: "GUESS 11 (v1.0.9) - Real-Time Room Sync & Instant Guest Join"
+          tag_name: v1.0.10
+          name: "GUESS 11 (v1.0.10) - Clean & Simple Beginner-Friendly UI"
           body: |
-            ## 🎨 GUESS 11 (v1.0.9) ⚡
+            ## 🎨 GUESS 11 (v1.0.10) ⚡
             > **"DRAW IT. GUESS IT. SCORE 11."**
 
-            ### 🚀 What's New in v1.0.9:
-            - 🌐 **Universal Cloud Share Links**: WhatsApp, Telegram, and Copy Link now automatically share the 24/7 online cloud link so friends on mobile data (4G/5G) or Wi-Fi can open it anywhere!
+            ### 🚀 What's New in v1.0.10:
+            - 🎯 **Clean, Simple & Beginner-Friendly UI**: Redesigned with clean modern colors, readable cards, and high-contrast typography instead of heavy glowing neons!
+            - 📱 **Exact Same Interface**: All buttons, links, controls, drawing tools, and pages remain 100% intact and functional.
+            - 🌐 **Universal Cloud Share Links**: WhatsApp, Telegram, and Copy Link automatically share the 24/7 online cloud link so friends can join from any phone/network!
             - ⚡ **Instant 1-Tap Join for Friends**: Friends who click an invite link can enter their player name and join the party in 1 second without typing emails or passwords!
             - 🔄 **Continuous 2-Second Room Polling**: Player list and slot updates are automatically synced every 2 seconds, ensuring 2+ players and the START GAME button show up immediately on all screens!
             - 👑 **Unbreakable Host Controls**: Host START GAME button activates reliably as soon as 2 players are connected.
-            - 🤖 **Android APK & iOS IPA**: Both `Guess11.apk` and `Guess11.ipa` updated with the latest fixes.
+            - 🤖 **Android APK & iOS IPA**: Both `Guess11.apk` and `Guess11.ipa` updated with the latest clean UI design!
 
             ---
 

@@ -30,23 +30,19 @@ export const HomePage: React.FC = () => {
     <div className="max-w-4xl mx-auto px-4 py-8 flex flex-col items-center justify-center min-h-[calc(100vh-120px)]">
       {/* Floating 3D/Neon particles */}
       <div className="relative mb-6 text-center">
-        <motion.div
-          animate={{ y: [0, -10, 0] }}
-          transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
-          className="inline-block"
-        >
-          <div className="w-24 h-24 sm:w-28 sm:h-28 rounded-3xl bg-gradient-to-tr from-orange-500 via-purple-600 to-cyan-400 p-1 shadow-neon-orange mb-4 mx-auto">
-            <div className="w-full h-full bg-slate-950 rounded-[22px] flex items-center justify-center font-display font-black text-5xl sm:text-6xl text-white">
+        <div className="inline-block">
+          <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-3xl bg-indigo-600 p-0.5 shadow-md mb-3 mx-auto">
+            <div className="w-full h-full bg-slate-900 rounded-[22px] flex items-center justify-center font-display font-black text-4xl sm:text-5xl text-white">
               11
             </div>
           </div>
-        </motion.div>
+        </div>
 
-        <h1 className="font-display font-black text-4xl sm:text-6xl text-transparent bg-clip-text bg-gradient-to-r from-orange-400 via-purple-300 to-cyan-400 tracking-tight mb-2">
+        <h1 className="font-display font-black text-3xl sm:text-5xl text-white tracking-tight mb-1">
           GUESS THE ELEVEN
         </h1>
 
-        <p className="text-sm sm:text-base font-black text-cyan-400 tracking-widest uppercase">
+        <p className="text-xs sm:text-sm font-bold text-slate-400 tracking-widest uppercase">
           DRAW IT. GUESS IT. SCORE 11.
         </p>
       </div>
@@ -105,7 +101,7 @@ export const HomePage: React.FC = () => {
       )}
 
       {/* Primary Action Buttons */}
-      <div className="w-full max-w-md space-y-4">
+      <div className="w-full max-w-md space-y-3.5">
         {/* Play with Friends / Create Room */}
         <button
           type="button"
@@ -113,16 +109,16 @@ export const HomePage: React.FC = () => {
             audioService.playButtonClick();
             navigate('/create-room');
           }}
-          className="w-full py-4 sm:py-5 px-6 rounded-3xl bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-500 hover:from-orange-400 hover:to-yellow-400 text-slate-950 font-black text-xl shadow-neon-orange flex items-center justify-between transform active:scale-98 transition-all group"
+          className="w-full py-4 px-6 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-lg shadow-sm flex items-center justify-between transform active:scale-98 transition-all group"
         >
           <div className="flex items-center gap-3">
-            <PlusCircle className="w-7 h-7" />
+            <PlusCircle className="w-6 h-6 text-white" />
             <div className="text-left">
               <div className="leading-tight">CREATE ROOM</div>
-              <div className="text-xs font-bold text-slate-900/80">Become Host &bull; 11 Player Room</div>
+              <div className="text-xs text-indigo-200">Host an 11-player party room</div>
             </div>
           </div>
-          <Sparkles className="w-6 h-6 text-slate-950 group-hover:rotate-12 transition-transform" />
+          <Sparkles className="w-5 h-5 text-indigo-200 group-hover:rotate-12 transition-transform" />
         </button>
 
         {/* Join Room */}
@@ -132,16 +128,16 @@ export const HomePage: React.FC = () => {
             audioService.playButtonClick();
             navigate('/join-room');
           }}
-          className="w-full py-4 sm:py-5 px-6 rounded-3xl glass-panel-elevated hover:bg-slate-800/80 text-white font-black text-xl border border-slate-700/80 flex items-center justify-between transform active:scale-98 transition-all shadow-xl group"
+          className="w-full py-4 px-6 rounded-2xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-lg border border-slate-700 flex items-center justify-between transform active:scale-98 transition-all shadow-sm group"
         >
           <div className="flex items-center gap-3">
-            <Users className="w-7 h-7 text-cyan-400" />
+            <Users className="w-6 h-6 text-cyan-400" />
             <div className="text-left">
               <div className="leading-tight">JOIN ROOM</div>
-              <div className="text-xs font-semibold text-slate-400">Enter Room Code or Invite Link</div>
+              <div className="text-xs text-slate-400">Enter Room Code or Invite Link</div>
             </div>
           </div>
-          <Play className="w-6 h-6 text-cyan-400 group-hover:translate-x-1 transition-transform" />
+          <Play className="w-5 h-5 text-cyan-400 group-hover:translate-x-1 transition-transform" />
         </button>
 
         {/* How to Play */}

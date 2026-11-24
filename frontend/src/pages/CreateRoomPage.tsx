@@ -125,8 +125,8 @@ export const CreateRoomPage: React.FC = () => {
                   }}
                   className={`py-2.5 rounded-xl text-xs font-bold border transition-all ${
                     roundDuration === dur
-                      ? 'bg-purple-600 text-white border-purple-400 shadow-neon-purple'
-                      : 'bg-slate-900 text-slate-300 border-slate-800 hover:bg-slate-800'
+                      ? 'bg-indigo-600 text-white border-indigo-500 shadow-sm'
+                      : 'bg-slate-800 text-slate-300 border-slate-700 hover:bg-slate-700'
                   }`}
                 >
                   {dur} SECONDS {dur === 90 && '(DEFAULT)'}
@@ -148,7 +148,7 @@ export const CreateRoomPage: React.FC = () => {
                   }}
                   className={`p-3 rounded-2xl border cursor-pointer transition-all flex items-center justify-between ${
                     gameMode === mode.id
-                      ? 'bg-cyan-950/40 border-cyan-400/80 shadow-neon-cyan ring-1 ring-cyan-400/30'
+                      ? 'bg-indigo-950/40 border-indigo-500 ring-1 ring-indigo-500/30'
                       : 'bg-slate-900/60 border-slate-800 hover:border-slate-700'
                   }`}
                 >
@@ -158,10 +158,10 @@ export const CreateRoomPage: React.FC = () => {
                   </div>
                   <div
                     className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
-                      gameMode === mode.id ? 'border-cyan-400 bg-cyan-400' : 'border-slate-600'
+                      gameMode === mode.id ? 'border-indigo-400 bg-indigo-500' : 'border-slate-600'
                     }`}
                   >
-                    {gameMode === mode.id && <div className="w-1.5 h-1.5 rounded-full bg-slate-950" />}
+                    {gameMode === mode.id && <div className="w-1.5 h-1.5 rounded-full bg-white" />}
                   </div>
                 </div>
               ))}
@@ -171,7 +171,7 @@ export const CreateRoomPage: React.FC = () => {
           <button
             type="submit"
             disabled={isCreating}
-            className="w-full py-4 rounded-2xl bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-500 hover:from-orange-400 text-slate-950 font-black text-lg shadow-neon-orange disabled:opacity-50 flex items-center justify-center gap-2 transform active:scale-95 transition-all mt-6"
+            className="w-full py-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-lg shadow-sm disabled:opacity-50 flex items-center justify-center gap-2 transform active:scale-95 transition-all mt-6"
           >
             {isCreating ? 'CREATING LOBBY...' : 'START ROOM LOBBY'}
           </button>

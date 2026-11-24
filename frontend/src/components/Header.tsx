@@ -40,15 +40,15 @@ export const Header: React.FC = () => {
             onClick={() => audioService.playButtonClick()}
             className="flex items-center gap-2.5 group"
           >
-            <div className="w-10 h-10 rounded-2xl bg-gradient-to-tr from-orange-500 via-purple-600 to-cyan-400 p-0.5 shadow-neon-orange group-hover:scale-105 transition-transform overflow-hidden">
+            <div className="w-10 h-10 rounded-2xl bg-indigo-600 p-0.5 shadow-md group-hover:scale-105 transition-transform overflow-hidden">
               <img src="/images/logo.png" alt="Guess The Eleven" className="w-full h-full object-cover rounded-[14px]" />
             </div>
             <div className="flex flex-col">
-              <span className="font-display font-black text-xl tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-pink-400 to-amber-400 group-hover:opacity-90 transition-opacity leading-none">
+              <span className="font-display font-black text-xl tracking-wider text-white group-hover:text-cyan-400 transition-colors leading-none">
                 GUESS 11
               </span>
-              <span className="text-[10px] text-cyan-400 font-bold tracking-widest uppercase mt-0.5">
-                THE ELEVEN • SCORE 11
+              <span className="text-[10px] text-slate-400 font-semibold tracking-widest uppercase mt-0.5">
+                SCORE 11 PARTY
               </span>
             </div>
           </Link>
@@ -60,7 +60,7 @@ export const Header: React.FC = () => {
               <button
                 type="button"
                 onClick={handleInstallClick}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-slate-950 font-black text-xs shadow-neon-orange hover:scale-105 transition-all"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs shadow-sm transition-all"
                 title="Install app on this device"
               >
                 <Download className="w-3.5 h-3.5" />
