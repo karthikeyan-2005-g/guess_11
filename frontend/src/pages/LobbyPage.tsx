@@ -183,7 +183,7 @@ export const LobbyPage: React.FC = () => {
       <div className="glass-panel rounded-3xl p-4 sm:p-6 mb-6 border border-slate-700 shadow-xl flex flex-col md:flex-row items-center justify-between gap-4">
         <div>
           <div className="flex items-center gap-2 mb-1">
-            <span className="px-2.5 py-1 rounded-full text-xs font-mono font-black bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 tracking-wider">
+            <span className="px-2.5 py-1 rounded-full text-xs font-mono font-black bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 tracking-wider">
               {roomCode}
             </span>
             <span className="text-xs text-slate-400 font-bold uppercase">&bull; 2–11 PLAYERS</span>
@@ -199,7 +199,7 @@ export const LobbyPage: React.FC = () => {
               </strong>
             </span>
             <span>&bull;</span>
-            <span className="flex items-center gap-1 font-bold text-cyan-400">
+            <span className="flex items-center gap-1 font-bold text-emerald-400">
               <Users className="w-3.5 h-3.5" /> {playerCount}/11 Connected
             </span>
           </div>
@@ -210,7 +210,7 @@ export const LobbyPage: React.FC = () => {
           <button
             type="button"
             onClick={() => setShowShareModal(true)}
-            className="px-4 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-xs font-bold flex items-center gap-2 shadow-sm transition-all"
+            className="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold flex items-center gap-2 shadow-sm transition-all"
           >
             <Share2 className="w-4 h-4" />
             <span>SHARE ROOM</span>
@@ -271,7 +271,7 @@ export const LobbyPage: React.FC = () => {
       <div className="mb-8">
         <h3 className="text-xs font-black text-slate-400 uppercase tracking-widest mb-3 flex items-center justify-between">
           <span>Party Members ({playerCount}/11) &bull; Min 2 to Start</span>
-          <span className="text-cyan-400 font-mono">11 Rounds</span>
+          <span className="text-emerald-400 font-mono">11 Rounds</span>
         </h3>
         <PlayerGrid players={players} maxPlayers={11} />
       </div>

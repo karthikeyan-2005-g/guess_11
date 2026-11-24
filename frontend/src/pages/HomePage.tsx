@@ -31,8 +31,8 @@ export const HomePage: React.FC = () => {
       {/* Floating 3D/Neon particles */}
       <div className="relative mb-6 text-center">
         <div className="inline-block">
-          <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-3xl bg-indigo-600 p-0.5 shadow-md mb-3 mx-auto">
-            <div className="w-full h-full bg-slate-900 rounded-[22px] flex items-center justify-center font-display font-black text-4xl sm:text-5xl text-white">
+          <div className="w-20 h-20 sm:w-24 sm:h-24 rounded-3xl bg-emerald-600 p-0.5 shadow-md mb-3 mx-auto">
+            <div className="w-full h-full bg-[#0c1527] rounded-[22px] flex items-center justify-center font-display font-black text-4xl sm:text-5xl text-emerald-400">
               11
             </div>
           </div>
@@ -109,16 +109,16 @@ export const HomePage: React.FC = () => {
             audioService.playButtonClick();
             navigate('/create-room');
           }}
-          className="w-full py-4 px-6 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-lg shadow-sm flex items-center justify-between transform active:scale-98 transition-all group"
+          className="w-full py-4 px-6 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-lg shadow-sm flex items-center justify-between transform active:scale-98 transition-all group"
         >
           <div className="flex items-center gap-3">
-            <PlusCircle className="w-6 h-6 text-white" />
+            <PlusCircle className="w-6 h-6 text-slate-950" />
             <div className="text-left">
               <div className="leading-tight">CREATE ROOM</div>
-              <div className="text-xs text-indigo-200">Host an 11-player party room</div>
+              <div className="text-xs text-slate-900 font-medium">Host an 11-player party room</div>
             </div>
           </div>
-          <Sparkles className="w-5 h-5 text-indigo-200 group-hover:rotate-12 transition-transform" />
+          <Sparkles className="w-5 h-5 text-slate-950 group-hover:rotate-12 transition-transform" />
         </button>
 
         {/* Join Room */}
@@ -131,13 +131,13 @@ export const HomePage: React.FC = () => {
           className="w-full py-4 px-6 rounded-2xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-lg border border-slate-700 flex items-center justify-between transform active:scale-98 transition-all shadow-sm group"
         >
           <div className="flex items-center gap-3">
-            <Users className="w-6 h-6 text-cyan-400" />
+            <Users className="w-6 h-6 text-emerald-400" />
             <div className="text-left">
               <div className="leading-tight">JOIN ROOM</div>
               <div className="text-xs text-slate-400">Enter Room Code or Invite Link</div>
             </div>
           </div>
-          <Play className="w-5 h-5 text-cyan-400 group-hover:translate-x-1 transition-transform" />
+          <Play className="w-5 h-5 text-emerald-400 group-hover:translate-x-1 transition-transform" />
         </button>
 
         {/* How to Play */}
@@ -149,7 +149,7 @@ export const HomePage: React.FC = () => {
           }}
           className="w-full py-3.5 px-6 rounded-2xl glass-card hover:bg-slate-800/50 text-slate-300 hover:text-white font-bold text-sm flex items-center justify-center gap-2 border border-slate-800 transition-all"
         >
-          <BookOpen className="w-4 h-4 text-purple-400" />
+          <BookOpen className="w-4 h-4 text-emerald-400" />
           HOW TO PLAY & GAME RULES
         </button>
 

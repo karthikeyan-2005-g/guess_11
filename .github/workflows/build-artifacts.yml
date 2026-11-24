@@ -136,20 +136,21 @@ jobs:
       - name: Publish to GitHub Releases
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v1.0.10
-          name: "GUESS 11 (v1.0.10) - Clean & Simple Beginner-Friendly UI"
+          tag_name: v1.0.11
+          name: "GUESS 11 (v1.0.11) - Deep Midnight Navy & Emerald Theme"
           body: |
-            ## 🎨 GUESS 11 (v1.0.10) ⚡
+            ## 🎨 GUESS 11 (v1.0.11) ⚡
             > **"DRAW IT. GUESS IT. SCORE 11."**
 
-            ### 🚀 What's New in v1.0.10:
-            - 🎯 **Clean, Simple & Beginner-Friendly UI**: Redesigned with clean modern colors, readable cards, and high-contrast typography instead of heavy glowing neons!
-            - 📱 **Exact Same Interface**: All buttons, links, controls, drawing tools, and pages remain 100% intact and functional.
+            ### 🚀 What's New in v1.0.11:
+            - 🌌 **Deep Midnight Navy & Vibrant Emerald Theme**: Redesigned with a stunning `#080e1a` midnight navy background, sleek `#111c35` cards, and high-contrast Emerald Green `#10b981` action buttons!
+            - 🔤 **Ultra-Clean Modern Fonts**: Upgraded typography with **Plus Jakarta Sans** for mobile readability and **Poppins** for bold headings!
+            - 🎯 **100% Exact Same Interface**: All pages, drawing tools, buttons, real-time multiplayer, and room settings are 100% preserved.
             - 🌐 **Universal Cloud Share Links**: WhatsApp, Telegram, and Copy Link automatically share the 24/7 online cloud link so friends can join from any phone/network!
             - ⚡ **Instant 1-Tap Join for Friends**: Friends who click an invite link can enter their player name and join the party in 1 second without typing emails or passwords!
             - 🔄 **Continuous 2-Second Room Polling**: Player list and slot updates are automatically synced every 2 seconds, ensuring 2+ players and the START GAME button show up immediately on all screens!
             - 👑 **Unbreakable Host Controls**: Host START GAME button activates reliably as soon as 2 players are connected.
-            - 🤖 **Android APK & iOS IPA**: Both `Guess11.apk` and `Guess11.ipa` updated with the latest clean UI design!
+            - 🤖 **Android APK & iOS IPA**: Both `Guess11.apk` and `Guess11.ipa` updated with the new theme and fonts!
 
             ---
 

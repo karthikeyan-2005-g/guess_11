@@ -79,7 +79,7 @@ export const LoginPage: React.FC = () => {
       >
         {/* Game Logo */}
         <div className="flex flex-col items-center text-center mb-6">
-          <div className="w-12 h-12 rounded-2xl bg-indigo-600 mb-2.5 flex items-center justify-center font-display font-black text-2xl text-white shadow-sm">
+          <div className="w-12 h-12 rounded-2xl bg-emerald-600 mb-2.5 flex items-center justify-center font-display font-black text-2xl text-slate-950 shadow-sm">
             11
           </div>
           <h2 className="font-display font-black text-2xl text-white">PLAYER LOGIN</h2>
@@ -156,7 +156,7 @@ export const LoginPage: React.FC = () => {
                 onChange={(e) => setPassword(e.target.value)}
                 placeholder="••••••••"
                 required
-                className="w-full bg-slate-900/90 text-white placeholder-slate-500 pl-10 pr-10 py-3 rounded-2xl border border-slate-700 focus:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-400/20 text-sm font-medium transition-all"
+                className="w-full bg-slate-900/90 text-white placeholder-slate-500 pl-10 pr-10 py-3 rounded-2xl border border-slate-700 focus:border-emerald-400 focus:outline-none focus:ring-2 focus:ring-emerald-400/20 text-sm font-medium transition-all"
               />
               <button
                 type="button"
@@ -175,7 +175,7 @@ export const LoginPage: React.FC = () => {
                 type="checkbox"
                 checked={rememberMe}
                 onChange={(e) => setRememberMe(e.target.checked)}
-                className="w-4 h-4 rounded border-slate-700 text-cyan-500 focus:ring-cyan-400 bg-slate-900"
+                className="w-4 h-4 rounded border-slate-700 text-emerald-500 focus:ring-emerald-400 bg-slate-900"
               />
               Remember me
             </label>
@@ -185,7 +185,7 @@ export const LoginPage: React.FC = () => {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-base shadow-sm disabled:opacity-50 flex items-center justify-center gap-2 transform active:scale-95 transition-all mt-4"
+            className="w-full py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-base shadow-sm disabled:opacity-50 flex items-center justify-center gap-2 transform active:scale-95 transition-all mt-4"
           >
             {isSubmitting ? (
               <div className="w-5 h-5 border-2 border-slate-950 border-t-transparent rounded-full animate-spin" />
@@ -200,7 +200,7 @@ export const LoginPage: React.FC = () => {
           <Link
             to="/register"
             onClick={() => audioService.playButtonClick()}
-            className="text-orange-400 hover:underline font-bold"
+            className="text-emerald-400 hover:underline font-bold"
           >
             Create Account
           </Link>

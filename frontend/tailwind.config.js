@@ -6,21 +6,23 @@ export default {
     extend: {
       colors: {
         game: {
-          dark: '#080c16',
-          card: '#0f172a',
-          border: '#1e293b',
-          accent: '#06b6d4', // neon cyan
-          primary: '#8b5cf6', // purple
-          secondary: '#ec4899', // pink
-          gold: '#f59e0b', // amber
-          success: '#10b981', // emerald
-          danger: '#ef4444', // red
-          eleven: '#f97316', // neon orange
+          dark: '#080e1a', // Deep Midnight Navy background
+          navy: '#0c1527', // Deep navy surface
+          card: '#111c35', // Clean midnight card
+          cardElevated: '#162342', // Elevated card
+          border: '#1e3056', // Soft navy border
+          accent: '#10b981', // Vibrant Emerald
+          primary: '#10b981', // Emerald
+          secondary: '#0ea5e9', // Sky blue companion
+          gold: '#f59e0b', // Amber/gold
+          success: '#10b981', // Emerald success
+          danger: '#ef4444', // Red
+          eleven: '#10b981', // Emerald
         },
       },
       fontFamily: {
-        sans: ['Outfit', 'sans-serif'],
-        display: ['Fredoka', 'cursive', 'sans-serif'],
+        sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+        display: ['Poppins', 'sans-serif'],
       },
       animation: {
         'pulse-fast': 'pulse 1s cubic-bezier(0.4, 0, 0.6, 1) infinite',

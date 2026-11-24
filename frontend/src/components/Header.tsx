@@ -40,11 +40,11 @@ export const Header: React.FC = () => {
             onClick={() => audioService.playButtonClick()}
             className="flex items-center gap-2.5 group"
           >
-            <div className="w-10 h-10 rounded-2xl bg-indigo-600 p-0.5 shadow-md group-hover:scale-105 transition-transform overflow-hidden">
+            <div className="w-10 h-10 rounded-2xl bg-emerald-600 p-0.5 shadow-md group-hover:scale-105 transition-transform overflow-hidden">
               <img src="/images/logo.png" alt="Guess The Eleven" className="w-full h-full object-cover rounded-[14px]" />
             </div>
             <div className="flex flex-col">
-              <span className="font-display font-black text-xl tracking-wider text-white group-hover:text-cyan-400 transition-colors leading-none">
+              <span className="font-display font-black text-xl tracking-wider text-white group-hover:text-emerald-400 transition-colors leading-none">
                 GUESS 11
               </span>
               <span className="text-[10px] text-slate-400 font-semibold tracking-widest uppercase mt-0.5">
@@ -60,7 +60,7 @@ export const Header: React.FC = () => {
               <button
                 type="button"
                 onClick={handleInstallClick}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs shadow-sm transition-all"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs shadow-sm transition-all"
                 title="Install app on this device"
               >
                 <Download className="w-3.5 h-3.5" />
@@ -75,7 +75,7 @@ export const Header: React.FC = () => {
               onClick={toggleSound}
               className={`p-2 rounded-xl border transition-all ${
                 soundEnabled
-                  ? 'bg-slate-800/80 text-cyan-300 border-cyan-500/30 hover:bg-slate-700'
+                  ? 'bg-slate-800/80 text-emerald-400 border-emerald-500/30 hover:bg-slate-700'
                   : 'bg-slate-900/60 text-slate-500 border-slate-800 hover:text-slate-300'
               }`}
               title={soundEnabled ? 'Mute Sounds' : 'Unmute Sounds'}

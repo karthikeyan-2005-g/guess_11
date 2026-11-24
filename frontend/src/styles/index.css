@@ -8,42 +8,46 @@
   }
 
   body {
-    background-color: #0b0f19;
-    color: #f8fafc;
-    font-family: 'Outfit', sans-serif;
+    background-color: #080e1a;
+    color: #f1f5f9;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     min-height: 100vh;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: 'Poppins', sans-serif;
   }
 }
 
-/* Simple, Clean Card Panels (Beginner-friendly modern design) */
+/* Deep Midnight Navy & Emerald Cards */
 .glass-panel {
-  background-color: #151d2e;
-  border: 1px solid #232f48;
+  background-color: #0f172a;
+  border: 1px solid #1e2e4a;
   border-radius: 1.25rem;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
 }
 
 .glass-panel-elevated {
-  background-color: #182236;
-  border: 1px solid #2c3a57;
+  background-color: #131d33;
+  border: 1px solid #243656;
   border-radius: 1.5rem;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
 }
 
 .glass-card {
-  background-color: #151d2e;
-  border: 1px solid #232f48;
+  background-color: #0f172a;
+  border: 1px solid #1e2e4a;
   border-radius: 1rem;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.25);
 }
 
 /* Clean text colors */
 .text-gradient-purple-cyan {
-  color: #38bdf8;
+  color: #10b981;
 }
 
 .text-gradient-orange-gold {
-  color: #fbbf24;
+  color: #34d399;
 }
 
 /* Custom clean scrollbars */
@@ -53,15 +57,15 @@
 }
 
 ::-webkit-scrollbar-track {
-  background: #0b0f19;
+  background: #080e1a;
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #334155;
+  background: #1e2e4a;
   border-radius: 9999px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #475569;
+  background: #10b981;
 }

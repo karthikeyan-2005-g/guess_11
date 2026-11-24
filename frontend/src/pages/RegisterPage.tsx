@@ -304,7 +304,7 @@ export const RegisterPage: React.FC = () => {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-base shadow-sm disabled:opacity-50 flex items-center justify-center gap-2 transform active:scale-95 transition-all mt-4"
+            className="w-full py-3.5 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-base shadow-sm disabled:opacity-50 flex items-center justify-center gap-2 transform active:scale-95 transition-all mt-4"
           >
             {isSubmitting ? (
               <div className="w-5 h-5 border-2 border-slate-950 border-t-transparent rounded-full animate-spin" />
@@ -319,7 +319,7 @@ export const RegisterPage: React.FC = () => {
           <Link
             to="/login"
             onClick={() => audioService.playButtonClick()}
-            className="text-cyan-400 hover:underline font-bold"
+            className="text-emerald-400 hover:underline font-bold"
           >
             Log In here
           </Link>

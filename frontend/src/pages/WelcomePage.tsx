@@ -20,7 +20,7 @@ export const WelcomePage: React.FC = () => {
           animate={{ scale: 1, opacity: 1 }}
           className="relative mb-6"
         >
-          <div className="w-28 h-28 rounded-3xl bg-indigo-600 p-1 shadow-md overflow-hidden">
+          <div className="w-28 h-28 rounded-3xl bg-emerald-600 p-1 shadow-md overflow-hidden">
             <img src="/images/logo.png" alt="Guess The Eleven" className="w-full h-full object-cover rounded-[22px]" />
           </div>
         </motion.div>
@@ -38,7 +38,7 @@ export const WelcomePage: React.FC = () => {
           initial={{ y: 20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ delay: 0.2 }}
-          className="text-xs sm:text-sm font-bold text-indigo-400 tracking-widest uppercase mb-6"
+          className="text-xs sm:text-sm font-black text-emerald-400 tracking-widest uppercase mb-6"
         >
           DRAW IT. GUESS IT. SCORE 11.
         </motion.p>
@@ -61,7 +61,7 @@ export const WelcomePage: React.FC = () => {
               audioService.playButtonClick();
               navigate('/register');
             }}
-            className="w-full py-4 rounded-2xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-lg shadow-sm flex items-center justify-center gap-3 transform active:scale-95 transition-all"
+            className="w-full py-4 rounded-2xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-lg shadow-sm flex items-center justify-center gap-3 transform active:scale-95 transition-all"
           >
             <UserPlus className="w-6 h-6" />
             CREATE ACCOUNT
@@ -75,7 +75,7 @@ export const WelcomePage: React.FC = () => {
             }}
             className="w-full py-4 rounded-2xl bg-slate-800 hover:bg-slate-700 text-white font-bold text-lg border border-slate-700 flex items-center justify-center gap-3 transform active:scale-95 transition-all"
           >
-            <LogIn className="w-6 h-6 text-indigo-400" />
+            <LogIn className="w-6 h-6 text-emerald-400" />
             LOGIN TO PLAY
           </button>
 

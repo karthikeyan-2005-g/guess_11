@@ -65,12 +65,12 @@ export const CreateRoomPage: React.FC = () => {
 
       <div className="glass-panel-elevated rounded-3xl p-6 sm:p-8 border border-slate-700 shadow-2xl">
         <div className="flex items-center gap-3 mb-6">
-          <div className="p-3 rounded-2xl bg-orange-500/20 text-orange-400 border border-orange-500/30">
+          <div className="p-3 rounded-2xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
             <Sparkles className="w-6 h-6" />
           </div>
           <div>
             <h2 className="font-display font-black text-2xl text-white">CREATE GAME ROOM</h2>
-            <p className="text-xs text-cyan-400 font-bold uppercase tracking-wider">
+            <p className="text-xs text-emerald-400 font-bold uppercase tracking-wider">
               Host an 11-player party room
             </p>
           </div>
@@ -93,20 +93,20 @@ export const CreateRoomPage: React.FC = () => {
               placeholder="e.g. Master Minds 11"
               maxLength={30}
               required
-              className="w-full bg-slate-900/90 text-white placeholder-slate-500 px-4 py-3 rounded-2xl border border-slate-700 focus:border-cyan-400 focus:outline-none text-sm font-medium"
+              className="w-full bg-slate-900/90 text-white placeholder-slate-500 px-4 py-3 rounded-2xl border border-slate-700 focus:border-emerald-400 focus:outline-none text-sm font-medium"
             />
           </div>
 
           {/* Max Players (2 to 11) */}
           <div className="p-3.5 rounded-2xl bg-slate-900/60 border border-slate-800 flex items-center justify-between">
             <div className="flex items-center gap-2.5">
-              <Users className="w-5 h-5 text-cyan-400" />
+              <Users className="w-5 h-5 text-emerald-400" />
               <div>
                 <h4 className="text-sm font-bold text-white">Room Capacity</h4>
                 <p className="text-xs text-slate-400">Min 2 players to start &bull; Max 11 players</p>
               </div>
             </div>
-            <span className="px-3 py-1 rounded-full bg-cyan-500/20 text-cyan-300 font-black text-xs sm:text-sm border border-cyan-500/40 font-mono">
+            <span className="px-3 py-1 rounded-full bg-emerald-500/20 text-emerald-300 font-black text-xs sm:text-sm border border-emerald-500/40 font-mono">
               2 – 11 PLAYERS
             </span>
           </div>
@@ -125,7 +125,7 @@ export const CreateRoomPage: React.FC = () => {
                   }}
                   className={`py-2.5 rounded-xl text-xs font-bold border transition-all ${
                     roundDuration === dur
-                      ? 'bg-indigo-600 text-white border-indigo-500 shadow-sm'
+                      ? 'bg-emerald-600 text-white border-emerald-500 shadow-sm'
                       : 'bg-slate-800 text-slate-300 border-slate-700 hover:bg-slate-700'
                   }`}
                 >
@@ -148,7 +148,7 @@ export const CreateRoomPage: React.FC = () => {
                   }}
                   className={`p-3 rounded-2xl border cursor-pointer transition-all flex items-center justify-between ${
                     gameMode === mode.id
-                      ? 'bg-indigo-950/40 border-indigo-500 ring-1 ring-indigo-500/30'
+                      ? 'bg-emerald-950/40 border-emerald-500 ring-1 ring-emerald-500/30'
                       : 'bg-slate-900/60 border-slate-800 hover:border-slate-700'
                   }`}
                 >
@@ -158,10 +158,10 @@ export const CreateRoomPage: React.FC = () => {
                   </div>
                   <div
                     className={`w-4 h-4 rounded-full border-2 flex items-center justify-center ${
-                      gameMode === mode.id ? 'border-indigo-400 bg-indigo-500' : 'border-slate-600'
+                      gameMode === mode.id ? 'border-emerald-400 bg-emerald-500' : 'border-slate-600'
                     }`}
                   >
-                    {gameMode === mode.id && <div className="w-1.5 h-1.5 rounded-full bg-white" />}
+                    {gameMode === mode.id && <div className="w-1.5 h-1.5 rounded-full bg-slate-950" />}
                   </div>
                 </div>
               ))}
@@ -171,7 +171,7 @@ export const CreateRoomPage: React.FC = () => {
           <button
             type="submit"
             disabled={isCreating}
-            className="w-full py-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-lg shadow-sm disabled:opacity-50 flex items-center justify-center gap-2 transform active:scale-95 transition-all mt-6"
+            className="w-full py-4 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-lg shadow-sm disabled:opacity-50 flex items-center justify-center gap-2 transform active:scale-95 transition-all mt-6"
           >
             {isCreating ? 'CREATING LOBBY...' : 'START ROOM LOBBY'}
           </button>

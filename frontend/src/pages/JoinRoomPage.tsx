@@ -66,12 +66,12 @@ export const JoinRoomPage: React.FC = () => {
 
       <div className="glass-panel-elevated rounded-3xl p-6 sm:p-8 border border-slate-700 shadow-2xl mb-8">
         <div className="flex items-center gap-3 mb-6">
-          <div className="p-3 rounded-2xl bg-cyan-500/20 text-cyan-400 border border-cyan-500/30">
+          <div className="p-3 rounded-2xl bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
             <Users className="w-6 h-6" />
           </div>
           <div>
             <h2 className="font-display font-black text-2xl text-white">JOIN GAME ROOM</h2>
-            <p className="text-xs text-cyan-400 font-bold uppercase tracking-wider">
+            <p className="text-xs text-emerald-400 font-bold uppercase tracking-wider">
               Enter Room Code or Invitation Link
             </p>
           </div>
@@ -103,14 +103,14 @@ export const JoinRoomPage: React.FC = () => {
                 onChange={(e) => setRoomInput(e.target.value)}
                 placeholder="e.g. GTE-A829 or paste full URL"
                 required
-                className="w-full bg-slate-900/90 text-white placeholder-slate-500 pl-10 pr-4 py-3.5 rounded-2xl border border-slate-700 focus:border-cyan-400 focus:outline-none text-base font-mono font-bold tracking-wider"
+                className="w-full bg-slate-900/90 text-white placeholder-slate-500 pl-10 pr-4 py-3.5 rounded-2xl border border-slate-700 focus:border-emerald-400 focus:outline-none text-base font-mono font-bold tracking-wider"
               />
             </div>
           </div>
 
           <button
             type="submit"
-            className="w-full py-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-lg shadow-sm transform active:scale-95 transition-all"
+            className="w-full py-4 rounded-xl bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-lg shadow-sm transform active:scale-95 transition-all"
           >
             ENTER ROOM
           </button>
