@@ -67,7 +67,7 @@ export const LobbyPage: React.FC = () => {
     ? `http://${localIp}${port || ':5173'}/room/${roomCode}`
     : `${window.location.origin}/room/${roomCode}`;
 
-  // 24/7 Cloud share URL (hosted on Render)
+  // 24/7 Cloud share URL (hosted on Render - ALWAYS accessible anywhere!)
   const cloudShareUrl = `https://guess-the-eleven-umyl.onrender.com/room/${roomCode}`;
 
   // Internet share URL
@@ -75,18 +75,31 @@ export const LobbyPage: React.FC = () => {
     ? `${customTunnelUrl.replace(/\/$/, '')}/room/${roomCode}`
     : cloudShareUrl;
 
-  // Selected share URL for sharing buttons
-  const activeShareUrl = shareTab === 'internet' ? cloudShareUrl : wifiShareUrl;
+  // Selected share URL for sharing buttons (default to 24/7 Cloud URL for universal access)
+  const activeShareUrl = shareTab === 'wifi' && isLocalhost && localIp
+    ? wifiShareUrl
+    : cloudShareUrl;
 
   const playerCount = Object.keys(players).length;
   const isFull = playerCount >= 11;
 
-  // Auto-connect socket to this room upon mounting + REST API fallback
-  useEffect(() => {
-    if (roomCode) {
-      socketService.joinRoom(roomCode);
+  // Effective Host Check (checking both store flag and user credentials)
+  const isEffectiveHost = isHost || !!(
+    user && (
+      room?.hostId === user.userId ||
+      room?.hostId === user.id ||
+      players[user.userId]?.isHost ||
+      players[user.id]?.isHost
+    )
+  );
 
-      // Fast immediate sync via REST API
+  // Auto-connect socket to this room upon mounting + 2-second continuous REST sync
+  useEffect(() => {
+    if (!roomCode) return;
+
+    socketService.joinRoom(roomCode);
+
+    const syncRoom = () => {
       apiRequest(`/rooms/${roomCode}`)
         .then((res) => {
           if (res?.data) {
@@ -97,7 +110,14 @@ export const LobbyPage: React.FC = () => {
           }
         })
         .catch(() => {});
-    }
+    };
+
+    // Immediate initial sync
+    syncRoom();
+
+    // Fast periodic poll every 2 seconds to guarantee 100% real-time player list sync
+    const pollTimer = setInterval(syncRoom, 2000);
+    return () => clearInterval(pollTimer);
   }, [roomCode, setRoom, updatePlayers]);
 
   // Navigate to game page once game starts
@@ -123,9 +143,9 @@ export const LobbyPage: React.FC = () => {
   };
 
   const handleStartGame = () => {
-    if (!isHost) return;
+    if (!isEffectiveHost) return;
     audioService.playGameStart();
-    socketService.emit('GAME_START');
+    socketService.emit('GAME_START', { roomCode });
   };
 
   const handleLeave = () => {
@@ -198,9 +218,9 @@ export const LobbyPage: React.FC = () => {
 
           <button
             type="button"
-            onClick={() => handleCopyLink(wifiShareUrl)}
+            onClick={() => handleCopyLink(activeShareUrl)}
             className="px-3.5 py-2.5 rounded-2xl glass-card hover:bg-slate-800 text-slate-200 text-xs font-bold flex items-center gap-2 border border-slate-700 transition-all"
-            title="Copy Wi-Fi invitation link"
+            title="Copy invitation link"
           >
             {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
             <span className="hidden sm:inline">{copied ? 'COPIED!' : 'COPY LINK'}</span>
@@ -208,7 +228,7 @@ export const LobbyPage: React.FC = () => {
 
           <button
             type="button"
-            onClick={() => shareService.shareWhatsApp({ roomCode, roomUrl: wifiShareUrl })}
+            onClick={() => shareService.shareWhatsApp({ roomCode, roomUrl: activeShareUrl })}
             className="p-2.5 rounded-2xl bg-emerald-600 hover:bg-emerald-500 text-white transition-all shadow-md"
             title="Share via WhatsApp"
           >
@@ -217,7 +237,7 @@ export const LobbyPage: React.FC = () => {
 
           <button
             type="button"
-            onClick={() => shareService.shareTelegram({ roomCode, roomUrl: wifiShareUrl })}
+            onClick={() => shareService.shareTelegram({ roomCode, roomUrl: activeShareUrl })}
             className="p-2.5 rounded-2xl bg-sky-500 hover:bg-sky-400 text-white transition-all shadow-md"
             title="Share via Telegram"
           >
@@ -258,7 +278,7 @@ export const LobbyPage: React.FC = () => {
 
       {/* Host Launch Controls */}
       <div className="glass-panel-elevated rounded-3xl p-6 border border-slate-700 text-center max-w-md mx-auto shadow-2xl">
-        {isHost ? (
+        {isEffectiveHost ? (
           <div>
             <h4 className="font-display font-black text-xl text-white mb-1">YOU ARE THE HOST 👑</h4>
             <p className="text-xs text-slate-400 mb-5">

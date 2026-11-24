@@ -13,6 +13,7 @@ interface AuthStore {
   setIntendedRedirectUrl: (url: string | null) => void;
   login: (credentials: any) => Promise<void>;
   register: (data: any) => Promise<void>;
+  guestLogin: (nickname?: string) => Promise<void>;
   logout: () => Promise<void>;
   checkAuth: () => Promise<void>;
   updateUser: (updated: Partial<User>) => void;
@@ -98,6 +99,34 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
     }
   },
 
+  guestLogin: async (nickname?: string) => {
+    set({ isLoading: true });
+    try {
+      const res = await authService.guestLogin(nickname);
+      if (!res?.data?.user || !res?.data?.tokens) {
+        throw new Error(res?.message || 'Guest login failed.');
+      }
+      const { user, tokens } = res.data;
+
+      localStorage.setItem('gte_access_token', tokens.accessToken);
+      localStorage.setItem('gte_refresh_token', tokens.refreshToken);
+      localStorage.setItem('gte_user', JSON.stringify(user));
+
+      socketService.updateAuthToken(tokens.accessToken);
+
+      set({
+        user,
+        token: tokens.accessToken,
+        refreshToken: tokens.refreshToken,
+        isAuthenticated: true,
+        isLoading: false,
+      });
+    } catch (err) {
+      set({ isLoading: false });
+      throw err;
+    }
+  },
+
   logout: async () => {
     try {
       await authService.logout();
@@ -125,6 +154,7 @@ export const useAuthStore = create<AuthStore>((set, get) => ({
     }
 
     try {
+      socketService.updateAuthToken(token);
       const profile = await authService.getProfile();
       localStorage.setItem('gte_user', JSON.stringify(profile.user));
       set({ user: profile.user, isAuthenticated: true });

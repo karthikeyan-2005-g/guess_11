@@ -34,6 +34,20 @@ router.post('/login', authLimiter, async (req: Request, res: Response, next: Nex
   }
 });
 
+// POST /api/auth/guest - Instant 1-tap Guest Account for room invites
+router.post('/guest', async (req: Request, res: Response, next: NextFunction) => {
+  try {
+    const result = await AuthService.guestLogin(req.body?.nickname);
+    res.status(200).json({
+      success: true,
+      message: 'GUEST LOGIN SUCCESSFUL!',
+      data: result,
+    });
+  } catch (error) {
+    next(error);
+  }
+});
+
 // POST /api/auth/refresh
 router.post('/refresh', async (req: Request, res: Response, next: NextFunction) => {
   try {

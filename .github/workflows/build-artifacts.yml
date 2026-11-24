@@ -136,18 +136,18 @@ jobs:
       - name: Publish to GitHub Releases
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v1.0.8
-          name: "GUESS 11 (v1.0.8) - Android APK & iPhone iOS IPA"
+          tag_name: v1.0.9
+          name: "GUESS 11 (v1.0.9) - Real-Time Room Sync & Instant Guest Join"
           body: |
-            ## 🎨 GUESS 11 (v1.0.8) ⚡
+            ## 🎨 GUESS 11 (v1.0.9) ⚡
             > **"DRAW IT. GUESS IT. SCORE 11."**
 
-            ### 🚀 What's New in v1.0.8:
-            - 🍎 **iPhone / iOS IPA Package**: Official `Guess11.ipa` ready to download for iOS!
-            - 🤖 **Android APK**: `Guess11.apk` with custom neon launcher icon & dark splash screen.
-            - 📱 **Official App Name**: Name displayed on home screen is **"Guess 11"**.
-            - 🔄 **Real-Time Multiplayer Sync**: Seamless cross-platform play between Android, iOS, and PC.
-            - ☁️ **24/7 Cloud Ready**: Permanent online multiplayer server on Render.
+            ### 🚀 What's New in v1.0.9:
+            - 🌐 **Universal Cloud Share Links**: WhatsApp, Telegram, and Copy Link now automatically share the 24/7 online cloud link so friends on mobile data (4G/5G) or Wi-Fi can open it anywhere!
+            - ⚡ **Instant 1-Tap Join for Friends**: Friends who click an invite link can enter their player name and join the party in 1 second without typing emails or passwords!
+            - 🔄 **Continuous 2-Second Room Polling**: Player list and slot updates are automatically synced every 2 seconds, ensuring 2+ players and the START GAME button show up immediately on all screens!
+            - 👑 **Unbreakable Host Controls**: Host START GAME button activates reliably as soon as 2 players are connected.
+            - 🤖 **Android APK & iOS IPA**: Both `Guess11.apk` and `Guess11.ipa` updated with the latest fixes.
 
             ---
 
@@ -158,6 +158,21 @@ jobs:
                - Connect iPhone to PC with USB.
                - Open Sideloadly or 3uTools, drag and drop `Guess11.ipa`, enter your Apple ID, and install.
                - On iPhone, go to **Settings > General > VPN & Device Management** and tap **Trust**.
+            3. **Using On-Device Tools (Scarlet / SideStore / TrollStore)**:
+               - Import `Guess11.ipa` directly into Scarlet or TrollStore to install without PC!
+
+            #### Method B: Instant Web App (No PC, 1-Tap Safari Install):
+            1. Open Safari on iPhone and visit: **https://guess-the-eleven-umyl.onrender.com**
+            2. Tap the **Share icon** `[ ⎋ ]` at the bottom.
+            3. Tap **"Add to Home Screen"**.
+            4. Enjoy fullscreen native gameplay with custom Guess 11 icon immediately!
+
+            ---
+
+            ### 🤖 How to Install on Android:
+            1. Under **Assets** below, tap **`Guess11.apk`** to download.
+            2. (If upgrading, uninstall previous version first to refresh launcher icon).
+            3. Install and enjoy!
             3. **Using On-Device Tools (Scarlet / SideStore / TrollStore)**:
                - Import `Guess11.ipa` directly into Scarlet or TrollStore to install without PC!
 

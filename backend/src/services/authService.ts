@@ -155,6 +155,62 @@ export class AuthService {
     };
   }
 
+  static async guestLogin(nickname?: string) {
+    const rawNick = (nickname || '').trim().slice(0, 20);
+    const cleanNick = rawNick || `Player_${Math.floor(1000 + Math.random() * 9000)}`;
+    const guestId = `guest_${Date.now()}_${Math.floor(Math.random() * 10000)}`;
+    const guestEmail = `${guestId}@guess11.app`;
+    const randomAvatar = `avatar-${Math.floor(1 + Math.random() * 11)}`;
+
+    const salt = await bcrypt.genSalt(8);
+    const passwordHash = await bcrypt.hash(guestId, salt);
+
+    const user = await prisma.user.create({
+      data: {
+        userId: guestId,
+        username: cleanNick,
+        email: guestEmail,
+        passwordHash,
+        profile: {
+          create: {
+            avatar: randomAvatar,
+            fullName: cleanNick,
+            favoriteCategory: 'General',
+          },
+        },
+        statistics: {
+          create: {},
+        },
+      },
+      include: {
+        profile: true,
+      },
+    });
+
+    const tokens = generateTokens({
+      id: user.id,
+      userId: user.userId,
+      username: user.username,
+      email: user.email,
+      role: user.role,
+    });
+
+    const expiresAt = new Date();
+    expiresAt.setDate(expiresAt.getDate() + 7);
+    await prisma.refreshToken.create({
+      data: {
+        userId: user.id,
+        token: tokens.refreshToken,
+        expiresAt,
+      },
+    });
+
+    return {
+      user: this.sanitizeUser(user),
+      tokens,
+    };
+  }
+
   static async refreshToken(refreshToken: string) {
     const decoded = verifyRefreshToken(refreshToken);
     if (!decoded) {

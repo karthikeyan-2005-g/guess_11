@@ -29,6 +29,13 @@ export const authService = {
     });
   },
 
+  async guestLogin(nickname?: string): Promise<AuthResponse> {
+    return apiRequest('/auth/guest', {
+      method: 'POST',
+      body: JSON.stringify({ nickname }),
+    });
+  },
+
   async logout(): Promise<void> {
     const refreshToken = localStorage.getItem('gte_refresh_token');
     try {

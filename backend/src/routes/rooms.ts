@@ -75,7 +75,8 @@ router.get('/:code', async (req: AuthenticatedRequest, res: Response, next: Next
         maxPlayers: room.settings.maxPlayers,
         isFull: playerCount >= room.settings.maxPlayers,
         canJoin: room.status === 'LOBBY' && playerCount < room.settings.maxPlayers,
-        players: Object.values(room.players).map((p) => ({
+        players: room.players,
+        playerList: Object.values(room.players).map((p) => ({
           userId: p.userId,
           username: p.username,
           avatar: p.avatar,

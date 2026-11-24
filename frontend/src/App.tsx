@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react';
-import { BrowserRouter, Routes, Route, Navigate, useLocation, useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { BrowserRouter, Routes, Route, Navigate, useLocation, useParams, useNavigate, Link } from 'react-router-dom';
 import { useAuthStore } from './store/authStore';
 import { useSocket } from './hooks/useSocket';
 
@@ -35,26 +35,101 @@ const ProtectedRoute: React.FC<{ children: React.ReactNode }> = ({ children }) =
   return <>{children}</>;
 };
 
-// Room Invitation Gateway - Handles Requirement 11
+// Room Invitation Gateway - Instant 1-tap Join for Invited Friends
 const RoomInviteGateway: React.FC = () => {
   const { code } = useParams<{ code: string }>();
-  const { isAuthenticated, setIntendedRedirectUrl } = useAuthStore();
+  const navigate = useNavigate();
+  const { isAuthenticated, guestLogin, setIntendedRedirectUrl } = useAuthStore();
+  const [nickname, setNickname] = useState('');
+  const [isJoining, setIsJoining] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const roomCode = code?.toUpperCase() || '';
 
   useEffect(() => {
-    if (code) {
-      const roomUrl = `/room/${code.toUpperCase()}`;
-      if (!isAuthenticated) {
-        // Save the intended room code URL so user automatically returns after login/registration
-        setIntendedRedirectUrl(roomUrl);
-      }
+    if (roomCode && !isAuthenticated) {
+      setIntendedRedirectUrl(`/room/${roomCode}`);
     }
-  }, [code, isAuthenticated, setIntendedRedirectUrl]);
+  }, [roomCode, isAuthenticated, setIntendedRedirectUrl]);
 
-  if (!isAuthenticated) {
-    return <Navigate to="/login" replace />;
+  if (isAuthenticated) {
+    return <Navigate to={`/lobby/${roomCode}`} replace />;
   }
 
-  return <Navigate to={`/lobby/${code?.toUpperCase()}`} replace />;
+  const handleQuickJoin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsJoining(true);
+    setError(null);
+    try {
+      await guestLogin(nickname.trim() || undefined);
+      navigate(`/lobby/${roomCode}`);
+    } catch (err: any) {
+      setError(err.message || 'Failed to join party.');
+    } finally {
+      setIsJoining(false);
+    }
+  };
+
+  return (
+    <div className="min-h-screen flex items-center justify-center p-4">
+      <div className="glass-panel-elevated w-full max-w-md rounded-3xl p-6 sm:p-8 border border-slate-700 shadow-2xl text-center">
+        <div className="w-16 h-16 rounded-2xl bg-gradient-to-tr from-orange-500 via-purple-600 to-cyan-400 p-0.5 shadow-neon-orange mx-auto mb-4">
+          <div className="w-full h-full bg-slate-950 rounded-[14px] flex items-center justify-center font-display font-black text-2xl text-white">
+            11
+          </div>
+        </div>
+
+        <span className="px-3 py-1 rounded-full text-xs font-mono font-black bg-cyan-500/20 text-cyan-300 border border-cyan-500/40 uppercase tracking-wider inline-block mb-2">
+          Room {roomCode}
+        </span>
+
+        <h2 className="font-display font-black text-2xl text-white mb-1">
+          YOU'RE INVITED! 🎮
+        </h2>
+        <p className="text-xs text-slate-400 mb-6">
+          Join your friends in <strong className="text-cyan-400">Guess 11</strong> right now!
+        </p>
+
+        {error && (
+          <div className="mb-4 p-3 rounded-2xl bg-rose-950/80 border border-rose-500/50 text-rose-200 text-xs font-semibold">
+            {error}
+          </div>
+        )}
+
+        <form onSubmit={handleQuickJoin} className="space-y-4">
+          <div className="text-left">
+            <label className="block text-xs font-bold text-slate-300 mb-1.5">
+              Enter Your Player Nickname
+            </label>
+            <input
+              type="text"
+              value={nickname}
+              onChange={(e) => setNickname(e.target.value)}
+              placeholder="e.g. Ninja, Alex, SuperStar"
+              maxLength={20}
+              autoFocus
+              className="w-full bg-slate-900/90 text-white placeholder-slate-500 px-4 py-3 rounded-2xl border border-slate-700 focus:border-cyan-400 focus:outline-none text-sm font-medium"
+            />
+          </div>
+
+          <button
+            type="submit"
+            disabled={isJoining}
+            className="w-full py-4 rounded-2xl bg-gradient-to-r from-orange-500 via-amber-500 to-yellow-500 text-slate-950 font-black text-base shadow-neon-orange hover:from-orange-400 hover:to-yellow-400 transform active:scale-95 transition-all disabled:opacity-50"
+          >
+            {isJoining ? 'JOINING ROOM...' : '🚀 JOIN ROOM NOW'}
+          </button>
+        </form>
+
+        <div className="mt-6 pt-5 border-t border-slate-800 flex items-center justify-center gap-2 text-xs text-slate-400">
+          <span>Already have an account?</span>
+          <Link to="/login" className="text-cyan-400 font-bold hover:underline">
+            Login here
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
 };
 
 export const App: React.FC = () => {

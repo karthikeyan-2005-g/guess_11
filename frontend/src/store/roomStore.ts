@@ -22,6 +22,20 @@ export const useRoomStore = create<RoomStore>((set, get) => ({
   roomFullCelebrated: false,
 
   setRoom: (room) => {
+    if (!room) {
+      set({ room: null, players: {}, isHost: false, isInLobby: false });
+      return;
+    }
+
+    let playersDict: Record<string, Player> = {};
+    if (Array.isArray(room.players)) {
+      room.players.forEach((p: any) => {
+        if (p?.userId) playersDict[p.userId] = p;
+      });
+    } else if (room.players && typeof room.players === 'object') {
+      playersDict = room.players;
+    }
+
     const currentUser = (() => {
       try {
         const u = localStorage.getItem('gte_user');
@@ -32,19 +46,31 @@ export const useRoomStore = create<RoomStore>((set, get) => ({
     })();
 
     const isHost = !!(
-      room?.hostId &&
-      currentUser &&
-      (room.hostId === currentUser.userId || room.hostId === currentUser.id)
+      currentUser && (
+        (room.hostId && (room.hostId === currentUser.userId || room.hostId === currentUser.id)) ||
+        (playersDict[currentUser.userId]?.isHost === true) ||
+        (currentUser.id && playersDict[currentUser.id]?.isHost === true)
+      )
     );
+
     set({
-      room,
-      players: room?.players || {},
+      room: { ...room, players: playersDict },
+      players: playersDict,
       isHost,
-      isInLobby: room?.status === 'LOBBY',
+      isInLobby: room.status === 'LOBBY',
     });
   },
 
-  updatePlayers: (players) => {
+  updatePlayers: (playersInput) => {
+    let playersDict: Record<string, Player> = {};
+    if (Array.isArray(playersInput)) {
+      playersInput.forEach((p: any) => {
+        if (p?.userId) playersDict[p.userId] = p;
+      });
+    } else if (playersInput && typeof playersInput === 'object') {
+      playersDict = playersInput;
+    }
+
     const currentUser = (() => {
       try {
         const u = localStorage.getItem('gte_user');
@@ -56,18 +82,21 @@ export const useRoomStore = create<RoomStore>((set, get) => ({
 
     const room = get().room;
     const isHost = !!(
-      room?.hostId &&
-      currentUser &&
-      (room.hostId === currentUser.userId || room.hostId === currentUser.id)
+      currentUser && (
+        (room?.hostId && (room.hostId === currentUser.userId || room.hostId === currentUser.id)) ||
+        (playersDict[currentUser.userId]?.isHost === true) ||
+        (currentUser.id && playersDict[currentUser.id]?.isHost === true)
+      )
     );
+
     if (room) {
       set({
-        players,
-        room: { ...room, players },
+        players: playersDict,
+        room: { ...room, players: playersDict },
         isHost,
       });
     } else {
-      set({ players });
+      set({ players: playersDict, isHost });
     }
   },
 

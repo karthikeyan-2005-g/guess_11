@@ -5,9 +5,9 @@ import { GameService } from '../services/gameService.js';
 
 export function registerGameHandlers(io: Server, socket: AuthenticatedSocket): void {
   // Host starts the game
-  socket.on('GAME_START', () => {
+  socket.on('GAME_START', (data?: { roomCode?: string }) => {
     const user = socket.data.user;
-    const roomCode = socket.data.currentRoomCode;
+    const roomCode = data?.roomCode || socket.data.currentRoomCode;
     if (!user || !roomCode) return;
 
     const room = RoomService.getRoom(roomCode);

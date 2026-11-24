@@ -29,7 +29,8 @@ export class GameService {
   private static usedObjectsByRoom: Map<string, string[]> = new Map();
 
   static startGame(io: Server, room: RoomState, hostUserId: string): void {
-    if (room.hostId !== hostUserId) {
+    const isHost = room.hostId === hostUserId || (room.players[hostUserId]?.isHost === true);
+    if (!isHost) {
       throw new Error('Only the room host can start the game.');
     }
 
